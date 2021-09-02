@@ -8,9 +8,16 @@ let connectionDB = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }) 
-    .then(()=> console.log('Database connected'))
-    .catch(err => console.log(err))
-} 
+  mongoose.connection.on('open', _ => {
+    console.log('Database connected')
+  })
+  mongoose.connection.on('error', err => {
+    console.log(err)
+  })
+
+    // .then(()=> console.log('Database connected'))
+    // .catch(err => console.log(err))
+}
 
 module.exports = connectionDB
 
