@@ -18,6 +18,7 @@ router.get('/', async (req, res, next) => {
     //     console.log({ 'product': product })
     //     await product.save();
     // })
+
     try {
         const products = await Product.find({});
         res.json(products);
