@@ -2,10 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const productSchema = new Schema({
     /* id, */
-
     name: {
         type: String,
-        unique: true,
         required: true
     },
     description: {
@@ -39,7 +37,7 @@ const productSchema = new Schema({
     versionKey: false,
   }
 )
-// console.log('esto es una prueba')
+
 const Product = model('Product', productSchema)
 
 module.exports = Product
