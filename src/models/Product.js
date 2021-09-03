@@ -39,7 +39,7 @@ const productSchema = new Schema({
     versionKey: false,
   }
 )
-
+// console.log('esto es una prueba')
 const Product = model('Product', productSchema)
 
 module.exports = Product
