@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
             brand: e.brand,
             categories: e.categories,
             image: e.image,
-            qualification: e.qualification,
+            qualification: e.qualification, 
         })
         console.log({ 'product': product })
         await product.save();
