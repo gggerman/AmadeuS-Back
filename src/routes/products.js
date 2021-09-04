@@ -5,30 +5,14 @@ const router = express.Router();
 const Product = require('../models/Product')
 
 router.get('/', async (req, res, next) => {
-    // NO DESCOMENTAR!! CODIGO DE PRECARGA DE DATOS A DB
-    // products.forEach(async e => {
-    //     let product = new Product({
-    //         name: e.name,
-    //         description: e.description,
-    //         price: e.price,
-    //         stock: e.stock,
-    //         brand: e.brand,
-    //         categories: e.categories,
-    //         image: e.image,
-    //         qualification: e.qualification,
-    //     })
-    //     console.log({ 'product': product })
-    //     await product.save();
-    // })
-
     const { name } = req.query;
 
     try {
         // Busqueda en la BD por 'name'
         if (name) {
-            let products = await Product.find({"name": { $regex: name , $options: 'i'}});
+            let products = await Product.find({ "name": { $regex: name, $options: 'i' } });
 
-            if(products.length){
+            if (products.length) {
                 res.json(products)
             } else {
                 res.status(404).send('No se encuentra ese producto')
@@ -36,9 +20,8 @@ router.get('/', async (req, res, next) => {
         }
         // Busqueda en la BD de todos los productos
         else {
-
             let products = await Product.find({}).populate('categories');
-            if(products.length){
+            if (products.length) {
                 res.json(products)
             } else {
                 res.status(404).send('No se encuentra ese producto')
@@ -49,24 +32,52 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+// PRECARGA DE DATOS A DB
+router.post('/precarga', async (req, res, next) => {
+    products.forEach(async e => {
+        let product = new Product({
+            name: e.name,
+            description: e.description,
+            price: e.price,
+            stock: e.stock,
+            brand: e.brand,
+            image: e.image,
+            qualification: e.qualification,
+        })
+        console.log('product', product)
+
+        const foundCategories = await Category.find({ name: { $in: e.categories } })
+        product.categories = foundCategories.map(category => category._id)
+
+        const savedProduct = await product.save();
+        console.log(savedProduct)
+    })
+    res.send('Precarga exitosa')
+})
 
 router.post('/', async (req, res, next) => {
     const { name, description, price, stock, brand, image, categories, qualification } = req.body;
+
     try {
+        if (!name) return res.status(400).send("required name");
+        if (!description) return res.status(400).send("required description");
+        if (!price) return res.status(400).send("required price");
+        if (!stock) return res.status(400).send("required stock");
+        if (!image) return res.status(400).send("required image");
+        if (!categories.length) return res.status(400).send("required categories");
+
         const product = new Product({
             name,
             description,
             price,
             stock,
             brand,
-            //categories,
             image,
             qualification
         })
-        if(categories) {
-            const foundCategories = await Category.find({name: {$in: categories}})
-            product.categories = foundCategories.map(category => category._id)
-        }
+
+        const foundCategories = await Category.find({ name: { $in: categories } })
+        product.categories = foundCategories.map(category => category._id)
 
         const savedProduct = await product.save();
         console.log(savedProduct)
@@ -91,22 +102,22 @@ router.put('/:id', async (req, res, next) => {
     const { id } = req.params;
     //const { name, description, price, stock, brand, categories, image, qualification } = req.body;
     try {
-      const updateProduct = await Product.findByIdAndUpdate( id, req.body, {
-          new: true
-        /* name: name,
-        description: description,
-        price: price,
-        stock: stock,
-        brand: brand,
-        categories: categories,
-        image: image,
-        qualification: qualification */
-      });
-      res.send('Producto modificado con éxito.')
+        const updateProduct = await Product.findByIdAndUpdate( id, req.body, {
+            new: true
+            /* name: name,
+            description: description,
+            price: price,
+            stock: stock,
+            brand: brand,
+            categories: categories,
+            image: image,
+            qualification: qualification */
+        });
+        res.send('Producto modificado con éxito.')
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  });
+});
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
