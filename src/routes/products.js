@@ -3,7 +3,6 @@ const products = require('../../api.products');
 const router = express.Router();
 const Product = require('../models/Product')
 
-
 router.get('/', async (req, res, next) => {
     /* products.forEach(async e => {
         let product = new Product({
@@ -20,9 +19,7 @@ router.get('/', async (req, res, next) => {
         await product.save();
     }) */
     try {
-        console.log('entre a  products')
         const products = await Product.find({});
-        console.log(products)
         res.json(products);
     }
     catch (err) {
@@ -52,7 +49,14 @@ router.post('/', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    
+    const { id } = req.params;
+
+    try {
+        product = await Product.findById(id)
+        res.send(product)
+    } catch (err) {
+        next(err)
+    }  
 })
 
 router.put('/:id', async (req, res, next) => {
@@ -77,7 +81,13 @@ router.put('/:id', async (req, res, next) => {
   });
 
 router.delete('/:id', async (req, res, next) => {
-
+    const { id } = req.params
+    try {
+        product = await Product.findByIdAndDelete(id)
+        res.send('The product has been removed')
+    } catch (err) {
+        next(err)
+    }  
 })
 
 //Agrega la categoria al producto.
