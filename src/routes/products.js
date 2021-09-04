@@ -5,26 +5,46 @@ const router = express.Router();
 const Product = require('../models/Product')
 
 router.get('/', async (req, res, next) => {
-    /* products.forEach(async e => {
-        let product = new Product({
-            name: e.name,
-            description: e.description,
-            price: e.price,
-            stock: e.stock,
-            brand: e.brand,
-            //categories: e.categories,
-            image: e.image,
-            qualification: e.qualification,
-        })
-        console.log({ 'product': product })
-        await product.save();
-    }) */
+    // NO DESCOMENTAR!! CODIGO DE PRECARGA DE DATOS A DB
+    // products.forEach(async e => {
+    //     let product = new Product({
+    //         name: e.name,
+    //         description: e.description,
+    //         price: e.price,
+    //         stock: e.stock,
+    //         brand: e.brand,
+    //         categories: e.categories,
+    //         image: e.image,
+    //         qualification: e.qualification,
+    //     })
+    //     console.log({ 'product': product })
+    //     await product.save();
+    // })
+
+    const { name } = req.query;
+
     try {
-        const products = await Product.find({}).populate("categories");
-        res.json(products);
-    }
-    catch (err) {
-        console.log(err)
+        // Busqueda en la BD por 'name'
+        if (name) {
+            let products = await Product.find({"name": { $regex: name , $options: 'i'}});
+
+            if(products.length){
+                res.json(products)
+            } else {
+                res.status(404).send('No se encuentra ese producto')
+            }
+        }
+        // Busqueda en la BD de todos los productos
+        else {
+            let products = await Product.find({})
+            if(products.length){
+                res.json(products)
+            } else {
+                res.status(404).send('No se encuentra ese producto')
+            }
+        }
+    } catch (err) {
+        next(err)
     }
 })
 
@@ -63,7 +83,7 @@ router.get('/:id', async (req, res, next) => {
         res.send(product)
     } catch (err) {
         next(err)
-    }  
+    }
 })
 
 router.put('/:id', async (req, res, next) => {
@@ -94,7 +114,7 @@ router.delete('/:id', async (req, res, next) => {
         res.send('The product has been removed')
     } catch (err) {
         next(err)
-    }  
+    }
 })
 
 //Agrega la categoria al producto.
