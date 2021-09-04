@@ -36,7 +36,8 @@ router.get('/', async (req, res, next) => {
         }
         // Busqueda en la BD de todos los productos
         else {
-            let products = await Product.find({})
+
+            let products = await Product.find({}).populate('categories');
             if(products.length){
                 res.json(products)
             } else {
