@@ -80,8 +80,25 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-
-})
+    const { id } = req.params;
+    //const { name, description, price, stock, brand, categories, image, qualification } = req.body;
+    try {
+      const updateProduct = await Product.findByIdAndUpdate( id, req.body, {
+          new: true
+        /* name: name,
+        description: description,
+        price: price,
+        stock: stock,
+        brand: brand,
+        categories: categories,
+        image: image,
+        qualification: qualification */
+      });
+      res.send('Producto modificado con éxito.')
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
