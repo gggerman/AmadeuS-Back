@@ -11,3 +11,26 @@ router.use('/products', products)
 router.use('/categories', categories)
 
 module.exports = router;
+
+/* 
+LISTADO DE RUTAS
+RUTAS GET
+    /products 
+    /products?name=guitarra eléctrica
+    /products/:id
+    /categories
+
+RUTAS POST
+    /products
+    /products/precarga
+    /categories
+
+RUTAS DELETE
+    /products/:id
+    /categories/:id
+
+RUTAS PUT
+    /products/:id
+    /categories/:id
+
+*/
