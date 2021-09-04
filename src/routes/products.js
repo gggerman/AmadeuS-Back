@@ -1,5 +1,6 @@
 const express = require('express');
 const products = require('../../api.products');
+const Category = require('../models/Category');
 const router = express.Router();
 const Product = require('../models/Product')
 
@@ -49,7 +50,7 @@ router.get('/', async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
-    const { name, description, price, stock, brand, categories, image, qualification } = req.body;
+    const { name, description, price, stock, brand, image, categories, qualification } = req.body;
     try {
         const product = new Product({
             name,
@@ -57,11 +58,17 @@ router.post('/', async (req, res, next) => {
             price,
             stock,
             brand,
-            categories,
+            //categories,
             image,
             qualification
         })
-        await product.save();
+        if(categories) {
+            const foundCategories = await Category.find({name: {$in: categories}})
+            product.categories = foundCategories.map(category => category._id)
+        }
+
+        const savedProduct = await product.save();
+        console.log(savedProduct)
         res.status(200).send('Producto creado con éxito.')
     } catch (err) {
         console.log(err)

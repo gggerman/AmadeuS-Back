@@ -22,13 +22,14 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    categories: {
-        type: Array
-    },
     image: {
         type: String,
         required: true,
     },
+    categories: [{
+        ref: "Category",
+        type: Schema.Types.ObjectId
+    }],
     qualification: Array,
     //compradores: [{}],
 },
