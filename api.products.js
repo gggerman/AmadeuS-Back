@@ -2,7 +2,7 @@ let products = [
     {
         name: 'Guitarra criolla clásica Gracia M1 natural',
         description: 'Con un toque artesanal único plasmado en sus materiales, Gracia acompaña a la historia musical desde el año 1870. Sus guitarras poseen alcance internacional y son utilizadas tantos por principiantes como por grandes referentes de la música.',
-        price: 10.600,
+        price: 10600,
         stock: 3,
         brand: 'Gracia',
         categories: ['Cuerda'],
@@ -12,7 +12,7 @@ let products = [
     {
         name: 'Guitarra criolla clásica Fonseca 25 natural',
         description: 'Disfrutá con esta guitarra Fonseca de la conexión con la música. Está diseñada para aficionados y profesionales. Con este instrumento descubrirás nuevos acordes, entonarás tus canciones y disfrutarás de la vida musical.',
-        price: 12.700,
+        price: 12700,
         stock: 4,
         brand: 'Fonseca',
         categories: ['Cuerda'],
@@ -22,7 +22,7 @@ let products = [
     {
         name: 'Guitarra criolla clásica Fonseca 25 negra',
         description: 'Disfrutá con esta guitarra Fonseca de la conexión con la música. Está diseñada para aficionados y profesionales. Con este instrumento descubrirás nuevos acordes, entonarás tus canciones y disfrutarás de la vida musical.',
-        price: 13.500,
+        price: 13500,
         stock: 3,
         brand: 'Fonseca',
         categories: ['Cuerda'],
@@ -32,7 +32,7 @@ let products = [
     {
         name: 'Guitarra criolla clásica La Alpujarra 80',
         description: 'Disfrutá con esta guitarra La Alpujarra de la conexión con la música. Está diseñada para aficionados y profesionales. Con este instrumento descubrirás nuevos acordes, entonarás tus canciones y disfrutarás de la vida musical.',
-        price: 34.700,
+        price: 34700,
         stock: 3,
         brand: 'La Alpujarra',
         categories: ['Cuerda'],
@@ -42,7 +42,7 @@ let products = [
     {
         name: 'Guitarra Electrica Stratocaster 22 Trastes Con Palanca Cable',
         description: 'Formato de guitarra simil Stratocaster. Cuerpo de madera maciza. Mástil de arce. Diapasón: MDF Alta densidad. Clavijas de fundición cromadas. Cuerdas de metal. 3 micrófonos: 2 bobina simple, 1 humbucker. 3 perillas: 1 de volumen, 2 de Tono. Selectora de 5 posiciones. 22 trastes. Puente móvil simple estilo Stratocaster',
-        price: 14.200,
+        price: 14200,
         stock: 2,
         brand: 'Disbyte',
         categories: ['Instrumentos eléctricos'],
@@ -52,7 +52,7 @@ let products = [
     {
         name: 'Guitarra Electrica Schecter Banshee-6 Extreme Thrubody',
         description: 'La Guitarra Eléctrica Schecter Banshee-6 Extreme cuenta con una tapa de arce acolchada en color negro. Tiene un look visualmente impactante y único que destacará en el escenario. Un juego de pastillas de diamante de Schecter proporciona a la banshee extreme unos tonos increíblemente estruendosos, que ofrecen unos agudos agudos con unas cualidades de graves en auge.',
-        price: 72.395,
+        price: 72395,
         stock: 2,
         brand: 'Schecter',
         categories: ['Instrumentos eléctricos'],
@@ -62,7 +62,7 @@ let products = [
     {
         name: 'Combo Teclado Casio Ctk7200 5 Octavas + Soporte + Fuente',
         description: '61 teclas con sensibilidad al tacto, 64 polifonías. 820 tonos y 260 ritmos. El teclado cuenta con 50 tonos de órgano con barra de armónicos seleccionados especialmente. La secuenciación de ataque, tiempo de liberación, detenimiento, vibrato, reverberación/coro, DPS y otros parámetros pueden ajustarse y editarse.',
-        price: 86.145,
+        price: 86145,
         stock: 4,
         brand: 'Casio',
         categories: ['Instrumentos eléctricos'],
@@ -72,7 +72,7 @@ let products = [
     {
         name: 'Microfono Shure Dinamico De Mano',
         description: 'Ideal para presentaciones habladas, presentaciones multimedia, karaoke, y el uso en instrumentos. Unidireccional (cardioide) ayuda a reducir el patrón de captación de información y la realimentación, mientras que la respuesta de frecuencia de ancho y de alto rendimiento ofrecen una calidad de sonido excelente. Soporte amortiguado interno para reducir el ruido de manejo.',
-        price: 5.500,
+        price: 5500,
         stock: 5,
         brand: 'Shure',
         categories: ['Electronica/audio'],
@@ -82,7 +82,7 @@ let products = [
     {
         name: 'Combo 2 Microfonos Shure + 2 Soportes + Accesorios',
         description: 'Ideal para presentaciones habladas, presentaciones multimedia, karaoke, y el uso en instrumentos. Unidireccional (cardioide) ayuda a reducir el patrón de captación de información y la realimentación, mientras que la respuesta de frecuencia de ancho y de alto rendimiento ofrecen una calidad de sonido excelente. Soporte amortiguado interno para reducir el ruido de manejo.',
-        price: 16.250,
+        price: 16250,
         stock: 3,
         brand: 'Shure',
         categories: ['Electronica/audio'],
@@ -92,7 +92,7 @@ let products = [
     {
         name: 'Bateria Acustica Mapex Prodigy 5 Cuerpos Fierros Banqueta',
         description: 'Mapex da acceso al mundo de la batería con una gran calidad y estilo. Producido en tilo con acabado recubierto, los tambores están equipados con Prodigy el nuevo modelo que utiliza un solo punto de contacto.',
-        price: 111.650,
+        price: 111650,
         stock: 3,
         brand: 'Mapex',
         categories: ['Percusion'],
@@ -102,7 +102,7 @@ let products = [
     {
         name: 'Bateria Acustica Completa Fierros Platos 5 Cuerpos Banqueta',
         description: 'Cascos de tilo de seis pliegues de alta calidad. Perfecta para principiantes y percusionistas en desarrollo.',
-        price: 49.999,
+        price: 49999,
         stock: 5,
         brand: 'Natal',
         categories: ['Percusion'],
@@ -112,7 +112,7 @@ let products = [
     {
         name: 'Bateria Electronica Roland Td27kv',
         description: 'La Td-27kv de nivel medio proporciona el sonido inmersivo y la respuesta que solo ofrecen las V-Drums. Se basa en el nuevo y potente generador de sonido Td-27, que viene repleto de sonidos de platos y percusiones de alta calidad y totalmente personalizables. La avanzada tecnología de disparador digital detecta todos los matices de la interpretación con una definición ultra alta, mientras que los pads de percusiones y platos de gran diámetro ofrecen sensaciones excepcionales, con una espaciosa disposición de estilo acústico.',
-        price: 823.900,
+        price: 823900,
         stock: 3,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
@@ -122,7 +122,7 @@ let products = [
     {
         name: 'Bateria Electronica Octapad Roland Spd20x',
         description: 'Con sus sonidos versátiles, almohadillas con capacidad de respuesta ultrarrápida y tamaño de maletín, el OCTAPAD SPD-20X es perfecto para realizar percusionistas en movimiento. Envasado dentro del SPD-20X hay una amplia gama de sonidos que representan instrumentos de percusión de todo el mundo.',
-        price: 156.750,
+        price: 156750,
         stock: 4,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
@@ -132,7 +132,7 @@ let products = [
     {
         name: 'Bajo Eléctrico 4 Cuerdas Racker Plus 457 T/ Musicman Activo',
         description: 'Bajo Racker Plus Faim 457 Tipo MusicMan Stingray, con Microfonos Activos. Cuerpo de Lenga. Mango de guatambu. Trastera de jacaranda. Trastes alpaca 2.9. Mic tipo MusicMan ceramico de fabricacion propia. Circuito Activo con push/pull (hace al mic serie o paralelo).',
-        price: 35.648,
+        price: 35648,
         stock: 6,
         brand: 'Music Man',
         categories: ['Instrumentos eléctricos'],
@@ -142,7 +142,7 @@ let products = [
     {
         name: 'Bajo Racker Plus Tipo Musicman Stingray 5 Cuerdas',
         description: 'Bajo Racker Plus 458 Tipo MusicMan Stingray 5 cuerdas. Cuerpo de Lenga. Mango de guatambu. Trastera de jacaranda. Trastes alpaca 2.9. Mic tipo MusicMan ceramico de fabricacion propia.',
-        price: 29.540,
+        price: 29540,
         stock: 4,
         brand: 'Racker Plus',
         categories: ['Instrumentos eléctricos'],
@@ -152,7 +152,7 @@ let products = [
     {
         name: 'Bajo Eléctrico Squier Vintage Modified Jaguar Spcl Hb',
         description: 'Este instrumento cuenta con un mástil moderno diseñado para el confort y el rendimiento, con un perfil contemporáneo (silueta de la sección transversal del mástil) y un acabado posterior satinado ideal para los bajistas que emplean el pulgar en la parte posterior o lateral del diapasón. El potenciador de graves activo en el Vintage Modified Jaguar Bass Special aporta los graves que necesitas en todo momento y una potencia extra de sonido.',
-        price: 84.635,
+        price: 84635,
         stock: 5,
         brand: 'Squier',
         categories: ['Instrumentos eléctricos'],
@@ -162,7 +162,7 @@ let products = [
     {
         name: 'Combo Violin Estudio Madera 3/4 4/4 + Accesorios',
         description: 'Violin generico tamaño 1/2, 3/4 o 4/4. Clavijas de Madera en 1 sola pieza. 4 Microafinadores. Arco de Madera. Resina. Estuche de Lujo Incluido.',
-        price: 15.000,
+        price: 15000,
         stock: 3,
         brand: 'Racker',
         categories: ['Cuerda'],
@@ -172,7 +172,7 @@ let products = [
     {
         name: 'Violin 4/4 Yamaha V3ska 4/4 C/ Arco Funda',
         description: 'Cada instrumento está hecho a mano utilizando los mismos métodos tradicionales que se utilizan para violines de gama alta. Perfecto para el violinista que busca un instrumento de calidad, el violín V3SKA está fabricado con maderas de la mejor calidad; la tapa es de madera de Pino, el fondo y el mástil son de madera de Maple, acompañados por una trastera de Ebano, clavijas de Rosewood y un impresionante arco de Pernambuco. Para hacer la afinación lo más sencillo posible, el cordal incorpora afinaprimas Wittner en todas las cuerdas, lo que permite una afinación precisa y exacta.',
-        price: 83.250,
+        price: 83250,
         stock: 5,
         brand: 'Yamaha',
         categories: ['Cuerda'],
@@ -182,7 +182,7 @@ let products = [
     {
         name: 'Violin Electrico Sojing 4/4 Silent C/ Arco Funda',
         description: 'Material Madera. Perilla de volumen y tono. Se usa con auriculares o amplificador. Incluye arco y estuche. Color madera rojiza.',
-        price: 32.180,
+        price: 32180,
         stock: 4,
         brand: 'Parquer',
         categories: ['Instrumentos eléctricos'],
@@ -202,7 +202,7 @@ let products = [
     {
         name: 'Combo Violin Estudio Madera 1/4 1/2 3/4 4/4 + Accesorios',
         description: 'Excelente violín superior, en diferentes medidas (3/4, 1/2, 4/4). Construido en madera genuina, estacionada. Gran sonoridad y versatilidad, la mejor opción en relación precio / calidad.',
-        price: 18.100,
+        price: 18100,
         stock: 5,
         brand: 'Racker',
         categories: ['Cuerda'],
@@ -212,7 +212,7 @@ let products = [
     {
         name: 'Teclado Roland Go-61kl 61 Sintetizador Go Key',
         description: 'Con su innovadora función Loop Mix cualquier persona puede construir canciones totalmente producidas al instante, incluso sin tener experiencia musical previa. Cuenta con un divertido teclado inspiracional para músicos debutantes. Función Loop Mix permitiéndote construir canciones al simplemente ejecutar notas en el teclado. Manipula los sonidos de tus Loops con intuitivo control one-touch. Mas de 500 sonidos con calidad-profesional: pianos, synths, strings, bass, brass, y mas. Grabadora de canciones integrada a bordo con respaldo USB.',
-        price: 73.700,
+        price: 73700,
         stock: 6,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
@@ -222,7 +222,7 @@ let products = [
     {
         name: 'Combo Teclado Sintetizador Roland Xps10 + Soporte + Fuente',
         description: 'Perfecto para los músicos trabajadores y aficionados por igual, el XPS-10 entrega los respetados sonidos y las funciones Roland en un precio muy atractivo. Este elegante sintetizador listo para el desempeño, está equipado con más de 1500 sonidos de la librería Roland, incluyendo versátiles Tones modernos del JUNO-Di, clásicos de las series D-50 y XP, y muchos otros mas. Un amplio rango de sonidos de instrumentos étnicos están a bordo del XPS-10, e incluso es posible importar tus propios sonidos vía memoria USB ¡para asignarlos a las teclas!',
-        price: 111.600,
+        price: 111600,
         stock: 5,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
@@ -232,7 +232,7 @@ let products = [
     {
         name: 'Teclado Sintetizador Roland Xps10 61 Teclas',
         description: 'Perfecto para los músicos trabajadores y aficionados por igual, el XPS-10 entrega los respetados sonidos y las funciones Roland en un precio muy atractivo. Este elegante sintetizador listo para el desempeño, está equipado con más de 1500 sonidos de la librería Roland, incluyendo versátiles Tones modernos del JUNO-Di, clásicos de las series D-50 y XP, y muchos otros mas. Un amplio rango de sonidos de instrumentos étnicos están a bordo del XPS-10, e incluso es posible importar tus propios sonidos vía memoria USB ¡para asignarlos a las teclas!',
-        price: 107.800,
+        price: 107800,
         stock: 6,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
@@ -242,7 +242,7 @@ let products = [
     {
         name: 'Korg Volca Kick Generador Analogico De Bombos Sintetizador',
         description: 'El Volca Kick es un generador de bombo analógico pensado para el diseño sonoro. Un circuito analógico basado en el potente sonido del filtro resonante MS-20 original, permite crear una amplia gama de sonidos de bombo, que sólo son posibles con circuitos analógicos, desde bombos sólidos a impactantes bajos. El secuenciador de 16 pasos, un rasgo distintivo de los volca, ahora tiene una nueva función Touch FX que te permite controlar un efecto al instante, dándote aún más potencial para el directo.',
-        price: 21.545,
+        price: 21545,
         stock: 6,
         brand: 'Korg',
         categories: ['Instrumentos eléctricos'],
@@ -252,7 +252,7 @@ let products = [
     {
         name: 'Caja Bafle Moon Audio STONE15A portátil con bluetooth negro 220V',
         description: 'Moon Audio STONE15A ofrece un sonido natural, con una gran claridad y precisión, que se dispersa de manera uniforme. Un parlante que asegura potencia y calidad por igual en la reproducción de contenidos multimedia.',
-        price: 30.780,
+        price: 30780,
         stock: 5,
         brand: 'Moon',
         categories: ['Electronica/audio'],
@@ -262,7 +262,7 @@ let products = [
     {
         name: 'Caja Bafle Potenciada As1014 Bluetooth Mp3 Microfono 1200w',
         description: 'El AS1014 es un centro completo de sonidos Multimedia. Todo lo que necesitás en un solo equipo , portátil, manijas, ruedas, batería propia, entrada USB, Bluetooth, Micrófono Inalámbrico, MP3, Display, entrada 12Vcc y Fuente a 220V. Entrada de señal por RCA y Para micrófonos por Plug 6.5. Luces led multicolores con encendido y apagado. Micrófono Inalámbrico incorporando con receptor UHF.',
-        price: 29.450,
+        price: 29450,
         stock: 5,
         brand: 'Audio Sonic',
         categories: ['Electronica/audio'],
@@ -272,7 +272,7 @@ let products = [
     {
         name: 'Caja Bafle Potenciado Jbl Eon615 1000w Activo Bluetooth',
         description: 'JBL Eon600 Eon615 ofrece un sonido natural, con una gran claridad y precisión, que se dispersa de manera uniforme. Un parlante que asegura potencia y calidad por igual en la reproducción de contenidos multimedia.',
-        price: 109.999,
+        price: 109999,
         stock: 6,
         brand: 'JBL',
         categories: ['Electronica/audio'],

@@ -2,10 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const productSchema = new Schema({
     /* id, */
-
     name: {
         type: String,
-        unique: true,
         required: true
     },
     description: {
@@ -24,13 +22,14 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    categories: {
-        type: Array
-    },
     image: {
         type: String,
         required: true,
     },
+    categories: [{
+        ref: "Category",
+        type: Schema.Types.ObjectId
+    }],
     qualification: Array,
     //compradores: [{}],
 },
@@ -39,7 +38,7 @@ const productSchema = new Schema({
     versionKey: false,
   }
 )
-// console.log('esto es una prueba')
+
 const Product = model('Product', productSchema)
 
 module.exports = Product

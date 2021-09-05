@@ -6,8 +6,13 @@ const categorySchema = new Schema({
     name: {
         type: String,
         required: true
-    },
-})
+    }
+},
+    {
+        timestamps: false,
+        versionKey: false,
+      }
+)
 
 const Category = model('Category', categorySchema)
 
