@@ -15,16 +15,17 @@ router.get('/', async (req, res, next) => {
             if (products.length) {
                 res.json(products)
             } else {
-                res.status(404).send('No se encuentra ese producto')
+                res.status(404).send('Product not found')
             }
         }
         // Busqueda en la BD de todos los productos
         else {
             let products = await Product.find({}).populate('categories');
+            
             if (products.length) {
                 res.json(products)
             } else {
-                res.status(404).send('No se encuentra ese producto')
+                res.status(404).send('Product not found')
             }
         }
     } catch (err) {
@@ -34,25 +35,29 @@ router.get('/', async (req, res, next) => {
 
 // PRECARGA DE DATOS A DB
 router.post('/precarga', async (req, res, next) => {
-    products.forEach(async e => {
-        let product = new Product({
-            name: e.name,
-            description: e.description,
-            price: e.price,
-            stock: e.stock,
-            brand: e.brand,
-            image: e.image,
-            qualification: e.qualification,
+    try {
+        products.forEach(async e => {
+            let product = new Product({
+                name: e.name,
+                description: e.description,
+                price: e.price,
+                stock: e.stock,
+                brand: e.brand,
+                image: e.image,
+                qualification: e.qualification,
+            })
+            console.log('product', product)
+
+            const foundCategories = await Category.find({ name: { $in: e.categories } })
+            product.categories = foundCategories.map(category => category._id)
+
+            const savedProduct = await product.save();
+            console.log(savedProduct)
         })
-        console.log('product', product)
-
-        const foundCategories = await Category.find({ name: { $in: e.categories } })
-        product.categories = foundCategories.map(category => category._id)
-
-        const savedProduct = await product.save();
-        console.log(savedProduct)
-    })
-    res.send('Precarga exitosa')
+        res.send('Preload successful')
+    } catch (err) {
+        next(err)
+    }
 })
 
 router.post('/', async (req, res, next) => {
@@ -81,9 +86,9 @@ router.post('/', async (req, res, next) => {
 
         const savedProduct = await product.save();
         console.log(savedProduct)
-        res.status(200).send('Producto creado con éxito.')
+        res.status(200).send('The product has been created successfully')
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 });
 
@@ -102,7 +107,7 @@ router.put('/:id', async (req, res, next) => {
     const { id } = req.params;
     //const { name, description, price, stock, brand, categories, image, qualification } = req.body;
     try {
-        const updateProduct = await Product.findByIdAndUpdate( id, req.body, {
+        const updateProduct = await Product.findByIdAndUpdate(id, req.body, {
             new: true
             /* name: name,
             description: description,
@@ -113,9 +118,9 @@ router.put('/:id', async (req, res, next) => {
             image: image,
             qualification: qualification */
         });
-        res.send('Producto modificado con éxito.')
+        res.send('The product has been successfully modified')
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 });
 
@@ -123,7 +128,7 @@ router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
     try {
         product = await Product.findByIdAndDelete(id)
-        res.send('The product has been removed')
+        res.send('The product has been removed successfully')
     } catch (err) {
         next(err)
     }
@@ -131,13 +136,25 @@ router.delete('/:id', async (req, res, next) => {
 
 //Agrega la categoria al producto.
 router.post('/:idProduct/category/:idCategory', async (req, res, next) => {
-
+    const { idProduct, idCategory } = req.params;
+    try{
+        product = await Product.updateOne({_id: idProduct}, {$addToSet: { categories: idCategory }})
+        res.send('The category has been successfully added to the product')
+    } catch (err) {
+        next(err)
+    }
 })
 
 
 //Elimina la categoria al producto.
 router.delete('/:idProduct/category/:idCategory', async (req, res, next) => {
-
+    const { idProduct, idCategory } = req.params;
+    try{
+        product = await Product.update({_id: idProduct}, {$pull: { categories: idCategory }})
+        res.send('The category has been successfully removed from the product')
+    } catch (err) {
+        next(err)
+    }
 })
 
 //Retorna todos los productos que tengan {valor} en su nombre o descripcion.

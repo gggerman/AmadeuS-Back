@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
         res.json(categories);
     }
     catch (err) {
-        console.log(err)
+        next(err)
     }
 })
 
@@ -19,22 +19,22 @@ router.post('/', async (req, res, next) => {
             name,
         })
         await category.save();
-        res.send('Categoría creada con éxito.')
+        res.send('The category has been created successfully')
     } catch (err) {
-        console.log(err)
+        next(err)
     }
 })
 
 router.put('/:id', async (req, res, next) => {
     const { id } = req.params;
-    try{
+    try {
         const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
-        new: true
+            new: true
         })
         //res.json(updatedCategory)
-        res.send('La categoria fue modificada correctamente')
-    } catch(err) {
-        console.log(err)
+        res.send('The category has been successfully modified')
+    } catch (err) {
+        next(err)
     }
 })
 
@@ -42,9 +42,9 @@ router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
     try {
         category = await Category.findByIdAndDelete(id)
-        res.send('El producto ha sido removido')
-    } catch(err) {
-        console.log(err)
+        res.send('The category has been removed successfully')
+    } catch (err) {
+        next(err)
     }
 })
 
