@@ -24,10 +24,12 @@ RUTAS POST
     /products
     /products/precarga
     /categories
+    /:idProduct/category/:idCategory
 
 RUTAS DELETE
     /products/:id
     /categories/:id
+    /:idProduct/category/:idCategory
 
 RUTAS PUT
     /products/:id

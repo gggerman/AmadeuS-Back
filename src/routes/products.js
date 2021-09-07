@@ -10,13 +10,13 @@ router.get('/', async (req, res, next) => {
     try {
         // Busqueda en la BD por 'name'
         if (name) {
-            let products = await Product.find({ "name": { $regex: name, $options: 'i' } });
+            let products = await Product.find({ name: { $regex: name, $options: 'i' } });
 
             if (products.length) {
                 res.json(products)
             } else {
-                res.status(404).send('Product not found')
             }
+            res.status(404).send('Product not found')
         }
         // Busqueda en la BD de todos los productos
         else {
@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
                 res.json(products)
             } else {
                 res.status(404).send('Product not found')
-            }
+            } 
         }
     } catch (err) {
         next(err)
