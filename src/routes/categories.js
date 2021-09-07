@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+/* router.post('/', async (req, res, next) => {
     const { name } = req.body;
     try {
         const category = new Category({
@@ -20,6 +20,25 @@ router.post('/', async (req, res, next) => {
         })
         await category.save();
         res.send('The category has been created successfully')
+    } catch (err) {
+        next(err)
+    }
+}) */
+router.post('/', async (req, res, next) => {
+    let { name } = req.body;
+    name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+    try {
+        let categories = await Category.find({ name: name});
+        if(categories.length){
+            console.log(categories)
+        res.status(404).send('The category is already created')
+    } else {
+        const category = new Category({
+            name,
+        })
+        await category.save();
+        res.send('The category has been created successfully')
+        }
     } catch (err) {
         next(err)
     }
