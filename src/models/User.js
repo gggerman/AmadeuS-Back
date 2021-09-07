@@ -12,7 +12,7 @@ const userSchema = new Schema({
     },
     pass: {
         type: Number,
-        required: true
+        required: true,
     },
     /* address: {
         type: Number,
