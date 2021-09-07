@@ -5,13 +5,17 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    surname: {
+        type: String,
+        required: true
+    },
     mail: {
         type: String,
         unique: true,
         required: true
     },
-    pass: {
-        type: Number,
+    password: {
+        type: String,
         required: true,
     },
     /* address: {
@@ -20,7 +24,6 @@ const userSchema = new Schema({
     }, */
     phone: {
         type: Number,
-        required: true,
     },
     favorites: [{
         ref: "Product",
