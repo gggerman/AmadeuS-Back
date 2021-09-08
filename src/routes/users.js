@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User')
+const { body, validationResult } = require('express-validator');
 
-router.post('/', async (req, res, next) => {
+router.post('/',
+    body('name').isLength({ max: 50 }),
+    body('surname').isLength({ max: 50 }),
+    body('password').isLength({ min: 5 }, {max: 20}),
+    body('mail').isEmail().normalizeEmail(),
+    async (req, res, next) => {
     const { name, surname, password, mail, phone } = req.body
     try {
         //Validaciones
@@ -12,9 +18,14 @@ router.post('/', async (req, res, next) => {
         searchMail = await User.findOne({ mail: mail })
         if (searchMail) return res.send('El mail ya existe');
 
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         const newUser = new User({ name, surname, password, mail, phone });
         await newUser.save();
-        
+
         res.json('Usuario creado exitosamente')
     }
     catch (err) {

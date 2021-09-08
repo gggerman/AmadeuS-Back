@@ -3,6 +3,7 @@ const products = require('../../api.products');
 const Category = require('../models/Category');
 const router = express.Router();
 const Product = require('../models/Product')
+const { body, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
     const { name } = req.query;
@@ -21,12 +22,12 @@ router.get('/', async (req, res, next) => {
         // Busqueda en la BD de todos los productos
         else {
             let products = await Product.find({}).populate('categories');
-            
+
             if (products.length) {
                 res.json(products)
             } else {
                 res.status(404).send('Product not found')
-            } 
+            }
         }
     } catch (err) {
         next(err)
@@ -60,7 +61,10 @@ router.post('/precarga', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/',
+    body('name').isLength({ max: 300 }),
+    body('description').isLength({ max: 3000 }),
+    async (req, res, next) => {
     const { name, description, price, stock, brand, image, categories, qualification } = req.body;
 
     try {
@@ -70,6 +74,11 @@ router.post('/', async (req, res, next) => {
         if (!stock) return res.status(400).send("required stock");
         if (!image) return res.status(400).send("required image");
         if (!categories.length) return res.status(400).send("required categories");
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
 
         const product = new Product({
             name,
