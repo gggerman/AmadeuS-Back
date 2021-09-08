@@ -27,8 +27,8 @@ const orderSchema = new Schema({
         }
     ],
     status: {
-        enum: [ "Cart", 'Created', 'Processing', 'Cancelled', 'Complete' ],
-        default: "Cart",
+        type: String,
+        default:"Cart",
         required: true
     },
     shipping: [{
