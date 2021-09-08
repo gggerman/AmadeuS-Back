@@ -34,7 +34,7 @@ RUTAS DELETE
     /:idProduct/category/:idCategory
     
 RUTAS PUT
-    /products/:id
-    /categories/:id
+/products/:id
+/categories/:id
 
 */
