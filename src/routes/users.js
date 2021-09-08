@@ -12,15 +12,9 @@ router.post('/', async (req, res, next) => {
         searchMail = await User.findOne({ mail: mail })
         if (searchMail) return res.send('El mail ya existe');
 
-        const newUser = new User({
-            name,
-            surname,
-            password,
-            mail,
-            phone
-        })
-
+        const newUser = new User({ name, surname, password, mail, phone });
         await newUser.save();
+        
         res.json('Usuario creado exitosamente')
     }
     catch (err) {
@@ -28,12 +22,11 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-router.put('/:idUser', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     // const { name, surname, password, mail, phone} = req.body;
-    
-    const { idUser } = req.params;
+    const { id } = req.params;
     try {
-        await User.findByIdAndUpdate({'_id': idUser}, req.body, {
+        await User.findByIdAndUpdate(id, req.body, {
             new: true
         })
         //res.json(updatedCategory)
