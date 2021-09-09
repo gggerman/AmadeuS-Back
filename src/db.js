@@ -4,7 +4,7 @@ const { DB_URI } = process.env;
 const mongoose = require('mongoose')
 
 let connectionDB = () => {
-  mongoose.connect('mongodb+srv://equipo16:vamoslospibes@cluster0.5doep.mongodb.net/ecommerce?retryWrites=true&w=majority', {
+  mongoose.connect(DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
