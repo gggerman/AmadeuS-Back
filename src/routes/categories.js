@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category')
+const { body, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -24,7 +25,9 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 }) */
-router.post('/', async (req, res, next) => {
+router.post('/',
+    body('name').isLength({ max: 80 }),
+    async (req, res, next) => {
     let { name } = req.body;
     name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     try {
@@ -33,6 +36,11 @@ router.post('/', async (req, res, next) => {
             console.log(categories)
         res.status(404).send('The category is already created')
     } else {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
+
         const category = new Category({
             name,
         })

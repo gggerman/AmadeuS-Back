@@ -1,25 +1,27 @@
 const { Router } = require('express');
 
-// Importación de routers. 
+// Importación de routers.
 const products = require('./products')
 const categories = require('./categories')
 const users = require('./users')
 const mercadopago = require('./mercadopago')
+const orders = require('./orders')
 
 const router = Router();
 
-// Configurar los routers. 
+// Configurar los routers.
 router.use('/products', products)
 router.use('/categories', categories)
 router.use('/users', users)
 router.use('/mercadopago', mercadopago)
+router.use('/orders', orders)
 
 module.exports = router;
 
-/* 
+/*
 LISTADO DE RUTAS
 RUTAS GET
-    /products 
+    /products
     /products?name=guitarra eléctrica
     /products/:id
     /categories
@@ -34,9 +36,9 @@ RUTAS DELETE
     /products/:id
     /categories/:id
     /:idProduct/category/:idCategory
-    
+
 RUTAS PUT
-    /products/:id
-    /categories/:id
+/products/:id
+/categories/:id
 
 */

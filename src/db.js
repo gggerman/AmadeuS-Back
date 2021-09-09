@@ -7,7 +7,7 @@ let connectionDB = () => {
   mongoose.connect(DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }) 
+  })
   mongoose.connection.on('open', _ => {
     console.log('Database connected')
   })
@@ -20,5 +20,3 @@ let connectionDB = () => {
 }
 
 module.exports = connectionDB
-
-
