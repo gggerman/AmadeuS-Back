@@ -4,7 +4,9 @@ const connectionDB  = require('./src/db.js');
 // Conexión a DB
 connectionDB()
 
+app.set('port', process.env.PORT || 3001);
+
 // Corriendo el servidor
-server.listen(process.env.PORT || 3001, () => {
-  console.log(`Server running on port 3001`); // eslint-disable-line no-console
+server.listen(app.get('port'), () => {
+  console.log(`Server running on port ${app.get('port')}`); // eslint-disable-line no-console
 });
