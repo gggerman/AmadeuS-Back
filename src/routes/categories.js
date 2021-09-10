@@ -5,12 +5,16 @@ const Category = require('../models/Category')
 router.get('/', async (req, res, next) => {
     try {
         const categories = await Category.find({});
-        res.json(categories);
+        if (categories.length) {
+            res.json(categories)
+        } else {
+            res.status(404).send('There are no categories')
+        }
     }
     catch (err) {
-        next(err)
-    }
-})
+            next(err)
+        }
+    })
 
 /* router.post('/', async (req, res, next) => {
     const { name } = req.body;
@@ -28,16 +32,16 @@ router.post('/', async (req, res, next) => {
     let { name } = req.body;
     name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     try {
-        let categories = await Category.find({ name: name});
-        if(categories.length){
+        let categories = await Category.find({ name: name });
+        if (categories.length) {
             console.log(categories)
-        res.status(404).send('The category is already created')
-    } else {
-        const category = new Category({
-            name,
-        })
-        await category.save();
-        res.send('The category has been created successfully')
+            res.status(404).send('The category is already created')
+        } else {
+            const category = new Category({
+                name,
+            })
+            await category.save();
+            res.send('The category has been created successfully')
         }
     } catch (err) {
         next(err)

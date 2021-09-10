@@ -31,7 +31,12 @@ const userSchema = new Schema({
 	}],
     cart: [{
         ref: "Product",
-		type: Schema.Types.ObjectId 
+		type: Schema.Types.ObjectId,
+        quantity: Number
+    }],
+    orders: [{
+        ref: "Order",
+        type: Schema.Types.ObjectId
     }],
     /* shipping:[{
 		street: String,
@@ -43,7 +48,8 @@ const userSchema = new Schema({
         type: Array
     }],
     isAdmin: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     },
 {
