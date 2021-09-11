@@ -1,19 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/Order')
+const Order = require('../models/Order');
+const Product = require('../models/Product');
+const User = require('../models/User');
 
 router.post('/', async (req, res, next) => {
-  const { buyer, phone, products, shipping, payment } = req.body;
+  const { buyer, phone, products, shipping, payment, date } = req.body;
 
   try {
-    const newOrder = await new Order({buyer, phone, products, shipping, payment});
-    if (newOrder) {
+    const newOrder = new Order({ 
+      phone, 
+      shipping, 
+      payment,
+      date
+    });
+    const foundUser = await User.find({ _id: { $in: buyer }} )
+    newOrder.buyer = foundUser.map(user => user._id)
     
-      newOrder.status = 'Pending.'
-      await newOrder.save();
-      console.log(newOrder)
-      return res.status(200).send(newOrder._id) // le mando al front el id que generamos para que quede enterado el comp de su id
-     
+    const foundProducts = await Product.find({ name: { $in: products } })
+    newOrder.products = foundProducts.map(product => product._id)
+
+    if (newOrder) {
+      const savedOrder = await newOrder.save();
+      console.log(savedOrder)
+      userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
+      return res.status(200).send('The order has been created successfully.')
     }
     return res.status(404).send('Error: the order has not been created.')
   } catch (e) {
@@ -23,7 +34,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate('products').populate('buyer');
     if (orders.length) {
       return res.status(200).send(orders);
     }

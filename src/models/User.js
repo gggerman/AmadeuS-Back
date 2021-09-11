@@ -31,19 +31,19 @@ const userSchema = new Schema({
 	}],
     cart: [{
         ref: "Product",
-		type: Schema.Types.ObjectId 
+		type: Schema.Types.ObjectId,
+        quantity: Number
     }],
-    /* shipping:[{
-		street: String,
-		location: String,
-		number: String,
-		info: String
-	}], */
+    orders: [{
+        ref: "Order",
+        type: Schema.Types.ObjectId
+    }],
     shoppingHistory: [{
         type: Array
     }],
     isAdmin: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     },
 {

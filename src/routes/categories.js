@@ -6,12 +6,16 @@ const { body, validationResult } = require('express-validator');
 router.get('/', async (req, res, next) => {
     try {
         const categories = await Category.find({});
-        res.json(categories);
+        if (categories.length) {
+            res.json(categories)
+        } else {
+            res.status(404).send('There are no categories')
+        }
     }
     catch (err) {
-        next(err)
-    }
-})
+            next(err)
+        }
+    })
 
 /* router.post('/', async (req, res, next) => {
     const { name } = req.body;
@@ -31,8 +35,8 @@ router.post('/',
     let { name } = req.body;
     name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     try {
-        let categories = await Category.find({ name: name});
-        if(categories.length){
+        let categories = await Category.find({ name: name });
+        if (categories.length) {
             console.log(categories)
         res.status(404).send('The category is already created')
     } else {
