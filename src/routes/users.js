@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
+const Category = require('../models/Category');
 
 router.post('/',
     body('name').isLength({ max: 50 }),
@@ -23,7 +24,15 @@ router.post('/',
           return res.status(400).json({ errors: errors.array() });
         }
 
-        const newUser = new User({ name, surname, password, mail, phone });
+        const newUser = new User({ 
+            name, 
+            surname, 
+            password,
+            mail, 
+            phone 
+        });
+
+        console.log(newUser)
         await newUser.save();
 
         res.json('Usuario creado exitosamente')
@@ -60,7 +69,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const users = await User.find().populate('cart');
+        const users = await User.find().populate('cart').populate('orders');
         //res.json(updatedCategory)
         res.send(users);
     }
@@ -115,8 +124,7 @@ router.get('/:id/orders', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        let user = await User.find({_id: id});
-        //console.log(orders[0].orders)
+        let user = await User.find({_id: id}).populate('orders');
         if (user[0].orders.length) {
             res.json(user[0].orders);
         } else {

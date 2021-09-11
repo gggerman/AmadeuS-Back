@@ -38,12 +38,6 @@ const userSchema = new Schema({
         ref: "Order",
         type: Schema.Types.ObjectId
     }],
-    /* shipping:[{
-		street: String,
-		location: String,
-		number: String,
-		info: String
-	}], */
     shoppingHistory: [{
         type: Array
     }],
