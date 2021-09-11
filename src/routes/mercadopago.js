@@ -8,22 +8,24 @@ mercadopago.configure({
   });
 
 router.post('/checkout', (req, res) => {
-    const {name, price, quantity} = req.body
-    console.log(name)
-	console.log(req.query)
+    const {name, price, quantity } = req.body
+    
+
     // crear la orden en nuestra base de datos con status "pendiente" esperando el resultado de la resp de MP
     // y cambiar el status luego de obtener la resp de MP
+	// { productID, name, price, quantity, categories, brand, buyer}
     let preference = {
 		
 		items: [{
 			title: name,
 			unit_price: Number(price),
 			quantity: Number(quantity),
+			
 		}],
 		back_urls: {
-			"success": "http://localhost:3000/products",
-			"failure": "http://localhost:3001/feedback",
-			"pending": "http://localhost:3001/feedback"
+			"success": "http://localhost:3000/orderdetail",
+			"failure": "http://localhost:3000/orderdetail",
+			"pending": "http://localhost:3000/orderdetail"
 		},
 		auto_return: 'approved',
         

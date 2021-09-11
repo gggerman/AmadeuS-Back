@@ -8,9 +8,12 @@ router.post('/', async (req, res, next) => {
   try {
     const newOrder = await new Order({buyer, phone, products, shipping, payment});
     if (newOrder) {
+    
       newOrder.status = 'Pending.'
       await newOrder.save();
-      return res.status(200).send('The order has been created successfully.')
+      console.log(newOrder)
+      return res.status(200).send(newOrder._id) // le mando al front el id que generamos para que quede enterado el comp de su id
+     
     }
     return res.status(404).send('Error: the order has not been created.')
   } catch (e) {
