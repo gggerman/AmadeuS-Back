@@ -1,9 +1,11 @@
 const { Router } = require('express');
 
-// Importación de routers. 
+// Importación de routers.
 const products = require('./products')
 const categories = require('./categories')
 const users = require('./users')
+const mercadopago = require('./mercadopago')
+const orders = require('./orders')
 
 const router = Router();
 
@@ -43,9 +45,12 @@ router.get('/user/manifestStripeCustomer', jwtCheck, function (req, res) {
 });
 
 
+// Configurar los routers.
 router.use('/products', products)
 router.use('/categories', categories)
 router.use('/users', users)
+router.use('/mercadopago', mercadopago)
+router.use('/orders', orders)
 
 
 

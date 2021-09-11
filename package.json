@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
+    "start": "node index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -24,7 +24,9 @@
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^2.0.4",
-    "mongoose": "^6.0.3",
+    "express-validator": "^6.12.1",
+    "mercadopago": "^1.5.8",
+    "mongoose": "^6.0.4",
     "morgan": "^1.10.0"
   },
   "devDependencies": {

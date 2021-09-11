@@ -10,7 +10,10 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
-    products: [
+    date: {
+        type: Date
+    },
+    /* products: [
         {
             _id:{
                 ref: "Product",
@@ -25,16 +28,20 @@ const orderSchema = new Schema({
                 default: 'NoReview'
             }
         }
-    ],
+    ], */
+    products: [{
+        ref: "Product",
+        type: Schema.Types.ObjectId
+    }],
     status: {
         type: String,
-        default:"Cart",
+        default:"Pending",
         required: true
     },
     shipping: [{
 		street: String,
 		location: String,
-		number: String,
+		number: Number,
 		info: String
 	}],
     payment: {

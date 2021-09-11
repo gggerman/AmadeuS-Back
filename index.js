@@ -1,12 +1,13 @@
 const server = require('./src/app.js');
 const connectionDB  = require('./src/db.js');
+const express = require('express');
 
 // Conexión a DB
 connectionDB()
 
+server.set('port', process.env.PORT || 3001);
+
 // Corriendo el servidor
-server.listen(3001, () => {
-  console.log(`Server running on port 3001`); // eslint-disable-line no-console
+server.listen(server.get('port'), () => {
+  console.log(`Server running on port ${server.get('port')}`); // eslint-disable-line no-console
 });
-
-
