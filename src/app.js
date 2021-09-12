@@ -13,10 +13,10 @@ const server = express();
 server.name = 'API';
 
 // Middlewares
+server.use(cors());
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use(cookieParser());
-server.use(cors());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', SERVER_CORS); // update to match the domain you will make the request from
