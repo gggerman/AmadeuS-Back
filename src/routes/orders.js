@@ -19,14 +19,16 @@ router.post('/', async (req, res, next) => {
     
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
-
+   
     if (newOrder) {
       const savedOrder = await newOrder.save();
+
       console.log('este es el id de la orde ' + savedOrder._id)
       userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
-      return res.status(200).send('The order has been created successfully.')
+      return res.status(200).send(savedOrder._id)
     }
     return res.status(404).send('Error: the order has not been created.')
+
   } catch (e) {
     next(e);
   }
