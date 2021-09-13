@@ -1,5 +1,4 @@
 const { Router } = require('express');
-
 // Importación de routers.
 const products = require('./products')
 const categories = require('./categories')

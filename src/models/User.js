@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+//const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
     name: {
@@ -51,6 +52,15 @@ const userSchema = new Schema({
     versionKey: false,
   }
 )
+
+/* userSchema.statics.hashPassword = async function (password) {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+  };
+  
+userSchema.methods.validatePassword = async function (password, newPassword) {
+  return await bcrypt.compare(password, newPassword);
+}; */
 
 const User = model('User', userSchema)
 
