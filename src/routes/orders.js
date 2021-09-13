@@ -14,21 +14,21 @@ router.post('/', async (req, res, next) => {
       payment,
       date
     });
-    // const foundUser = await User.find({ _id: { $in: buyer }} )   descomentar cuando tengamos el buyer
-    // newOrder.buyer = foundUser.map(user => user._id)
+    const foundUser = await User.findOne({ _id: buyer } )
+    newOrder.buyer = foundUser
     
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
    
     if (newOrder) {
       const savedOrder = await newOrder.save();
-      
-      // userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
+
+      console.log('este es el id de la orde ' + savedOrder._id)
+      userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
       return res.status(200).send(savedOrder._id)
-    } 
-      return res.status(404).send('Error: the order has not been created.')
-    
-  
+    }
+    return res.status(404).send('Error: the order has not been created.')
+
   } catch (e) {
     next(e);
   }
