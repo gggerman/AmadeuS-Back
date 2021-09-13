@@ -1,6 +1,8 @@
 const express = require('express');
 const mercadopago = require("mercadopago");
 const router = express.Router();
+require('dotenv').config();
+const { SERVER } = process.env
 
 
 mercadopago.configure({
@@ -8,24 +10,20 @@ mercadopago.configure({
   });
 
 router.post('/checkout', (req, res) => {
-    const {name, price, quantity } = req.body
-    
+   
 
-    // crear la orden en nuestra base de datos con status "pendiente" esperando el resultado de la resp de MP
-    // y cambiar el status luego de obtener la resp de MP
-	// { productID, name, price, quantity, categories, brand, buyer}
     let preference = {
 		
 		items: [{
-			title: name,
-			unit_price: Number(price),
-			quantity: Number(quantity),
+			title: req.body.name,
+			unit_price: Number(req.body.price),
+			quantity: Number(req.body.quantity),
 			
 		}],
 		back_urls: {
-			"success": "http://localhost:3000/orderdetail",
-			"failure": "http://localhost:3000/orderdetail",
-			"pending": "http://localhost:3000/orderdetail"
+			"success": `${SERVER}/orderdetail`,
+			"failure": `${SERVER}/orderdetail`,
+			"pending": `${SERVER}/orderdetail`
 		},
 		auto_return: 'approved',
         
@@ -41,7 +39,42 @@ router.post('/checkout', (req, res) => {
 			console.log(error);
 		});
         
-})    
+})  
+
+router.post('/cart', (req, res) => {
+   
+	 const { cartProducts }  = req.body
+	 const arreglo =  cartProducts.map ((item)  => ({ 
+					title: item.name,
+					unit_price: Number(item.price),
+					quantity: Number(item.quantity), 
+	}))
+	console.log('arreglo que viene por body', arreglo)
+	
+		let preference = {
+			
+			items: arreglo,
+
+			back_urls: {
+				"success": `${SERVER}/orderdetail`,
+				"failure": `${SERVER}/orderdetail`,
+				"pending": `${SERVER}/orderdetail`
+			},
+			auto_return: 'approved',
+			
+		};
+	
+		mercadopago.preferences.create(preference)
+			.then(function (response) {
+				//trabajar con la respuesta de MP
+				console.log(response.body)
+				global.id = response.body.id;
+				res.send(response.body.init_point)
+			}).catch(function (error) {
+				console.log(error);
+			});
+			
+	})  
 
 router.get('/feedback' , ( req, res) => {
     const {payment_id, status, merchant_order_id} = req.query

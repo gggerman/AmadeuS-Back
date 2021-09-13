@@ -19,10 +19,10 @@ router.post('/', async (req, res, next) => {
     
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
-    console.log(newOrder._id, 'este es newOrder')
+   
     if (newOrder) {
       const savedOrder = await newOrder.save();
-      console.log(savedOrder._id, 'este es savedOrder')
+      
       // userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
       return res.status(200).send(savedOrder._id)
     } 
