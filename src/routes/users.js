@@ -27,7 +27,7 @@ router.post('/',
         const newUser = new User({ 
             name, 
             surname, 
-            password,
+            password/* : await User.hashPassword(password) */,
             mail, 
             phone 
         });
