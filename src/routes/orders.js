@@ -5,28 +5,40 @@ const Product = require('../models/Product');
 const User = require('../models/User');
 
 router.post('/', async (req, res, next) => {
-  const { buyer, phone, products, shipping, payment, date } = req.body;
+  const { buyer, phone, products, shipping, payment, date, user } = req.body;
 
   try {
-    const newOrder = new Order({ 
-      phone, 
-      shipping, 
+    const newOrder = new Order({
+      phone,
+      shipping,
       payment,
       date
     });
-    const foundUser = await User.find({ _id: { $in: buyer }} )
-    newOrder.buyer = foundUser.map(user => user._id)
-    
+
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
 
+    const foundUser = await User.findOne({ mail: user.email })
+    if (!foundUser) {
+      const newUser = new User({
+        name: user.name,
+        mail: user.email
+      })
+      newOrder.buyer = newUser
+      const savedUser = await newUser.save();
+    } else {
+      newOrder.buyer = foundUser
+    }
+    
     if (newOrder) {
       const savedOrder = await newOrder.save();
-      console.log(savedOrder)
-      userOrder = await User.updateOne({ _id: buyer }, {$addToSet: { orders: [savedOrder] }})
-      return res.status(200).send('The order has been created successfully.')
+      
+      userOrder = await User.updateOne({ mail: user.email }, { $addToSet: { orders: [savedOrder] } })
+      console.log('este es el id de la orden ' + savedOrder._id)
+      return res.status(200).send(savedOrder._id)
     }
     return res.status(404).send('Error: the order has not been created.')
+
   } catch (e) {
     next(e);
   }
@@ -41,7 +53,7 @@ router.get('/', async (req, res, next) => {
     return res.status(404).send('Orders not found.')
 
   } catch (e) {
-      next(e);
+    next(e);
   }
 });
 
@@ -49,7 +61,7 @@ router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const order = await Order.findById(id)
+    const order = await Order.findById(id).populate('products').populate('buyer')
 
     if (order) {
       return res.status(200).send(order);
@@ -57,7 +69,7 @@ router.get('/:id', async (req, res, next) => {
     return res.status(404).send('Order not found.')
 
   } catch (e) {
-      next(e);
+    next(e);
   }
 });
 
@@ -66,14 +78,14 @@ router.put('/:id', async (req, res, next) => {
 
   try {
     if (id) {
-      const orderUpdated = await Order.findByIdAndUpdate(id, req.body, {new: true});
+      const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true });
 
       return res.status(200).send('The order has been successfully modified.')
     }
     return res.status(404).send('Order not found.')
 
   } catch (e) {
-      next(e);
+    next(e);
   }
 });
 

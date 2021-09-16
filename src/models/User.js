@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+//const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
     name: {
@@ -7,7 +8,7 @@ const userSchema = new Schema({
     },
     surname: {
         type: String,
-        required: true
+        required: false
     },
     mail: {
         type: String,
@@ -16,7 +17,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     /* address: {
         type: Number,
@@ -30,8 +31,10 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId 
 	}],
     cart: [{
-        ref: "Product",
-		type: Schema.Types.ObjectId,
+        _id: {
+            ref: "Product",
+		    type: Schema.Types.ObjectId,
+        },
         quantity: Number
     }],
     orders: [{
@@ -51,6 +54,15 @@ const userSchema = new Schema({
     versionKey: false,
   }
 )
+
+/* userSchema.statics.hashPassword = async function (password) {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+  };
+  
+userSchema.methods.validatePassword = async function (password, newPassword) {
+  return await bcrypt.compare(password, newPassword);
+}; */
 
 const User = model('User', userSchema)
 

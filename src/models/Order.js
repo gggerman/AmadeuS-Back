@@ -4,11 +4,11 @@ const orderSchema = new Schema({
     buyer: {
         ref: "User",
         type: Schema.Types.ObjectId,
-        required: true
+        required: false
     },
     phone: {
         type: Number,
-        required: true
+        required: false
     },
     date: {
         type: Date
