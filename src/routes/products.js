@@ -1,8 +1,9 @@
 const express = require('express');
 const products = require('../../api.products');
-const Category = require('../models/Category');
 const router = express.Router();
-const Product = require('../models/Product')
+const Category = require('../models/Category');
+const Product = require('../models/Product');
+const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
@@ -26,7 +27,7 @@ router.get('/', async (req, res, next) => {
             if (products.length) {
                 res.json(products)
             } else {
-                res.status(404).send('Product not found')
+                res.status(404).send('Product not found.')
             }
         }
     } catch (err) {
@@ -55,7 +56,7 @@ router.post('/precarga', async (req, res, next) => {
             const savedProduct = await product.save();
             console.log(savedProduct)
         })
-        res.send('Preload successful')
+        res.send('Preload successful.')
     } catch (err) {
         next(err)
     }
@@ -65,7 +66,7 @@ router.post('/',
     body('name').isLength({ max: 300 }),
     body('description').isLength({ max: 3000 }),
     async (req, res, next) => {
-    const { name, description, price, stock, brand, image, categories, qualification } = req.body;
+    const { name, description, price, stock, brand, image, categories } = req.body;
 
     try {
         if (!name) return res.status(400).send("required name");
@@ -86,8 +87,7 @@ router.post('/',
             price,
             stock,
             brand,
-            image,
-            qualification
+            image
         })
 
         const foundCategories = await Category.find({ name: { $in: categories } })
@@ -95,7 +95,7 @@ router.post('/',
 
         const savedProduct = await product.save();
         console.log(savedProduct)
-        res.status(200).send('The product has been created successfully')
+        res.status(200).send('The product has been created successfully.')
     } catch (err) {
         next(err)
     }
@@ -127,7 +127,7 @@ router.put('/:id', async (req, res, next) => {
             image: image,
             qualification: qualification */
         });
-        res.send('The product has been successfully modified')
+        res.send('The product has been successfully modified.')
     } catch (err) {
         next(err);
     }
@@ -137,7 +137,7 @@ router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
     try {
         product = await Product.findByIdAndDelete(id)
-        res.send('The product has been removed successfully')
+        res.send('The product has been removed successfully.')
     } catch (err) {
         next(err)
     }
@@ -148,7 +148,7 @@ router.post('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
     try{
         product = await Product.updateOne({_id: idProduct}, {$addToSet: { categories: idCategory }})
-        res.send('The category has been successfully added to the product')
+        res.send('The category has been successfully added to the product.')
     } catch (err) {
         next(err)
     }
@@ -160,11 +160,54 @@ router.delete('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
     try{
         product = await Product.update({_id: idProduct}, {$pull: { categories: idCategory }})
-        res.send('The category has been successfully removed from the product')
+        res.send('The category has been successfully removed from the product.')
     } catch (err) {
         next(err)
     }
 })
+
+router.post('/:idProduct/qualification/:idUser', async (req, res, next) => {
+  const { idProduct, idUser } = req.params;
+  const { punctuation, opinion, date, modified } = req.body;
+
+  try {
+    const product = await Product.updateOne({_id: idProduct}, {$addToSet: {qualification: {
+      idUser,
+      punctuation,
+      opinion,
+      date,
+      modified}}})
+    res.status(200).send('The review has been successfully added to the product.')
+  } catch (e) {
+    next(e);
+  }
+});
+
+// router.put('/:idProduct/qualification/:idQualification', async (req, res, next) => {
+//   const { idProduct, idQualification } = req.params;
+//   const { punctuation, opinion, date, modified } = req.body;
+//
+//   try {
+//     const productFound = await Product.findById(idProduct);
+//
+//     productFound.qualification.find(e => idQualification) = req.body;
+//
+//     res.status(200).send('The review has been successfully modified.')
+//   } catch (e) {
+//     next(e);
+//   }
+// });
+
+router.delete('/:idProduct/qualification/:idQualification', async (req, res, next) => {
+  const { idProduct, idQualification } = req.params;
+
+  try {
+    const productFound = await Product.update({_id: idProduct}, {$pull: {qualification: {_id: idQualification}}});
+    res.status(200).send('The review has been successfully removed.')
+  } catch (e) {
+    next(e);
+  }
+});
 
 //Retorna todos los productos que tengan {valor} en su nombre o descripcion.
 router.get('/search?query={valor}', async (req, res, next) => {
