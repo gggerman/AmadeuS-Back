@@ -183,20 +183,20 @@ router.post('/:idProduct/qualification/:idUser', async (req, res, next) => {
   }
 });
 
-// router.put('/:idProduct/qualification/:idQualification', async (req, res, next) => {
-//   const { idProduct, idQualification } = req.params;
-//   const { punctuation, opinion, date, modified } = req.body;
-//
-//   try {
-//     const productFound = await Product.findById(idProduct);
-//
-//     productFound.qualification.find(e => idQualification) = req.body;
-//
-//     res.status(200).send('The review has been successfully modified.')
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+router.put('/:idProduct/qualification/:idQualification', async (req, res, next) => {
+  const { idProduct, idQualification } = req.params;
+  const { punctuation, opinion, date, modified } = req.body;
+
+  try {
+    const productFound = await Product.findById(idProduct);
+
+    productFound.qualification.find(e => e._id === idQualification) = req.body;
+
+    res.status(200).send('The review has been successfully modified.')
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.delete('/:idProduct/qualification/:idQualification', async (req, res, next) => {
   const { idProduct, idQualification } = req.params;
