@@ -31,7 +31,16 @@ const productSchema = new Schema({
         ref: "Category",
         type: Schema.Types.ObjectId
     }],
-    qualification: Array,
+    qualification: [{
+        idUser: {
+          ref: "User",
+          type: Schema.Types.ObjectId
+        },
+        punctuation: Number,
+        opinion: String,
+        date: String,
+        modified: String
+    }],
     //compradores: [{}],
 },
 {

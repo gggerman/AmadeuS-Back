@@ -8,7 +8,7 @@ const userSchema = new Schema({
     },
     surname: {
         type: String,
-        required: true
+        required: false
     },
     mail: {
         type: String,
@@ -17,7 +17,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     /* address: {
         type: Number,
@@ -31,8 +31,10 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId 
 	}],
     cart: [{
-        ref: "Product",
-		type: Schema.Types.ObjectId,
+        _id: {
+            ref: "Product",
+		    type: Schema.Types.ObjectId,
+        },
         quantity: Number
     }],
     orders: [{
