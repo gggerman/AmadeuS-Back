@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
 
-    const foundUser = await User.findOne({ mail: user.mail })
+    const foundUser = await User.findOne({ mail: user.email })
     if (!foundUser) {
       const newUser = new User({
         name: user.name,
@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
       const savedOrder = await newOrder.save();
       
       userOrder = await User.updateOne({ mail: user.email }, { $addToSet: { orders: [savedOrder] } })
-      console.log('este es el id de la orde ' + savedOrder._id)
+      console.log('este es el id de la orden ' + savedOrder._id)
       return res.status(200).send(savedOrder._id)
     }
     return res.status(404).send('Error: the order has not been created.')
