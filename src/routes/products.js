@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
         }
         // Busqueda en la BD de todos los productos
         else {
-            let products = await Product.find({}).populate('categories');
+            let products = await Product.find({}).populate('categories').populate('reviews', '');
 
             if (products.length) {
                 res.json(products)
@@ -105,7 +105,7 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        product = await Product.findById(id)
+        product = await Product.findById(id).populate('categories').populate('reviews')
         res.send(product)
     } catch (err) {
         next(err)
