@@ -24,7 +24,7 @@ const userSchema = new Schema({
         type: Number,
     },
     shipping: [{
-        type: Array
+        
     }],
     favorites: [{
         ref: "Product",
