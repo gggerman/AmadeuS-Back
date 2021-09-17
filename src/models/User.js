@@ -4,7 +4,7 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema({
     name: {
         type: String,
-        required: false
+        required: true
     },
     surname: {
         type: String,
@@ -31,8 +31,10 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId 
 	}],
     cart: [{
-        ref: "Product",
-		type: Schema.Types.ObjectId,
+        _id: {
+            ref: "Product",
+		    type: Schema.Types.ObjectId,
+        },
         quantity: Number
     }],
     orders: [{

@@ -1,8 +1,9 @@
 const express = require('express');
 const products = require('../../api.products');
-const Category = require('../models/Category');
 const router = express.Router();
-const Product = require('../models/Product')
+const Category = require('../models/Category');
+const Product = require('../models/Product');
+const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
@@ -21,12 +22,12 @@ router.get('/', async (req, res, next) => {
         }
         // Busqueda en la BD de todos los productos
         else {
-            let products = await Product.find({}).populate('categories');
+            let products = await Product.find({}).populate('categories').populate('reviews', '');
 
             if (products.length) {
                 res.json(products)
             } else {
-                res.status(404).send('Product not found')
+                res.status(404).send('Product not found.')
             }
         }
     } catch (err) {
@@ -55,7 +56,7 @@ router.post('/precarga', async (req, res, next) => {
             const savedProduct = await product.save();
             console.log(savedProduct)
         })
-        res.send('Preload successful')
+        res.send('Preload successful.')
     } catch (err) {
         next(err)
     }
@@ -65,7 +66,7 @@ router.post('/',
     body('name').isLength({ max: 300 }),
     body('description').isLength({ max: 3000 }),
     async (req, res, next) => {
-    const { name, description, price, stock, brand, image, categories, qualification } = req.body;
+    const { name, description, price, stock, brand, image, categories } = req.body;
 
     try {
         if (!name) return res.status(400).send("required name");
@@ -86,8 +87,7 @@ router.post('/',
             price,
             stock,
             brand,
-            image,
-            qualification
+            image
         })
 
         const foundCategories = await Category.find({ name: { $in: categories } })
@@ -95,7 +95,7 @@ router.post('/',
 
         const savedProduct = await product.save();
         console.log(savedProduct)
-        res.status(200).send('The product has been created successfully')
+        res.status(200).send('The product has been created successfully.')
     } catch (err) {
         next(err)
     }
@@ -105,7 +105,7 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        product = await Product.findById(id)
+        product = await Product.findById(id).populate('categories').populate('reviews')
         res.send(product)
     } catch (err) {
         next(err)
@@ -127,7 +127,7 @@ router.put('/:id', async (req, res, next) => {
             image: image,
             qualification: qualification */
         });
-        res.send('The product has been successfully modified')
+        res.send('The product has been successfully modified.')
     } catch (err) {
         next(err);
     }
@@ -137,7 +137,7 @@ router.delete('/:id', async (req, res, next) => {
     const { id } = req.params
     try {
         product = await Product.findByIdAndDelete(id)
-        res.send('The product has been removed successfully')
+        res.send('The product has been removed successfully.')
     } catch (err) {
         next(err)
     }
@@ -148,7 +148,7 @@ router.post('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
     try{
         product = await Product.updateOne({_id: idProduct}, {$addToSet: { categories: idCategory }})
-        res.send('The category has been successfully added to the product')
+        res.send('The category has been successfully added to the product.')
     } catch (err) {
         next(err)
     }
@@ -160,7 +160,7 @@ router.delete('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
     try{
         product = await Product.update({_id: idProduct}, {$pull: { categories: idCategory }})
-        res.send('The category has been successfully removed from the product')
+        res.send('The category has been successfully removed from the product.')
     } catch (err) {
         next(err)
     }

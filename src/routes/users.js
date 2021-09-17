@@ -2,45 +2,46 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
-const Category = require('../models/Category');
+const Product = require('../models/Product');
+
 
 router.post('/',
     body('name').isLength({ max: 50 }),
     body('surname').isLength({ max: 50 }),
-    body('password').isLength({ min: 5 }, {max: 20}),
+    body('password').isLength({ min: 5 }, { max: 20 }),
     body('mail').isEmail().normalizeEmail(),
     async (req, res, next) => {
-    const { name, surname, password, mail, phone } = req.body
-    try {
-        //Validaciones
-        if (!name) return res.send('Debe agregar un nombre');
-        if (!surname) return res.send('Debe agregar un apellido');
-        if (!mail) return res.send('Debe agregar un mail');
-        searchMail = await User.findOne({ mail: mail })
-        if (searchMail) return res.send('El mail ya existe');
+        const { name, surname, password, mail, phone } = req.body
+        try {
+            //Validaciones
+            if (!name) return res.send('Debe agregar un nombre');
+            if (!surname) return res.send('Debe agregar un apellido');
+            if (!mail) return res.send('Debe agregar un mail');
+            searchMail = await User.findOne({ mail: mail })
+            if (searchMail) return res.send('El mail ya existe');
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+
+            const newUser = new User({
+                name,
+                surname,
+                password/* : await User.hashPassword(password) */,
+                mail,
+                phone
+            });
+
+            console.log(newUser)
+            await newUser.save();
+
+            res.json('Usuario creado exitosamente')
         }
-
-        const newUser = new User({ 
-            name, 
-            surname, 
-            password/* : await User.hashPassword(password) */,
-            mail, 
-            phone 
-        });
-
-        console.log(newUser)
-        await newUser.save();
-
-        res.json('Usuario creado exitosamente')
-    }
-    catch (err) {
-        next(err)
-    }
-})
+        catch (err) {
+            next(err)
+        }
+    })
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
@@ -78,12 +79,52 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/:id', async (req, res, next) => {
+    const { id } = req.params
+    try {
+        user = await User.findById(id).populate('cart').populate('orders');
+        //res.json(updatedCategory)
+        res.send(user);
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+//Ruta para agregar todos los productos del local storage al carrito
+router.post('/cart', async (req, res, next) => {
+    let { cart, user } = req.body;
+
+    try {
+
+        let foundUser = await User.findOne({ mail: user.email })
+        if (!foundUser) {
+            const newUser = new User({
+                name: user.name,
+                mail: user.email
+            })
+            newUser.cart = cart
+            const savedUser = await newUser.save();
+        } else {
+            //userCart = await User.updateOne({_id: foundUser._id}, { $push: { cart: cart } })
+            //userCart = await User.updateOne({_id: foundUser._id}, { $addToSet: { cart: cart } })
+            userCart = await User.updateOne({_id: foundUser._id}, { $set: { cart: cart } })
+        }
+
+        res.send('Se modifico el carrito')
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+
 //Crear Ruta para agregar Item al Carrito
 router.post('/:idUser/cart/:idProduct', async (req, res, next) => {
     const { idUser, idProduct } = req.params;
 
-    try{
-        user = await User.updateOne({_id: idUser}, {$addToSet: { cart: [idProduct] }})
+    try {
+        user = await User.updateOne({ _id: idUser }, { $addToSet: { cart: [idProduct] } })
         res.send('El item se agrego correctamente')
     } catch (err) {
         next(err)
@@ -94,37 +135,21 @@ router.post('/:idUser/cart/:idProduct', async (req, res, next) => {
 router.delete('/:idUser/cart', async (req, res, next) => {
     const { idUser } = req.params;
 
-    try{
-        user = await User.updateOne({_id: idUser}, {$unset: { cart: []}})
+    try {
+        user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
         res.send('El carrito quedo vacio')
     } catch (err) {
         next(err)
     }
 })
 
-//Crear Ruta para editar las cantidades del carrito
-/* router.put('/:idUser/cart/:idProduct', async (req, res, next) => {
-    const { idUser, idProduct } = req.params;
-    const { quantity } = req.body;
-
-    try{
-        user = await User.find({_id: idUser})
-        //user = user.filter(e => e._id === idProduct)
-        user = user[0].cart.filter(e => e._id === idProduct)
-        console.log(user)
-
-        res.send('La cantidad de ha modificado')
-    } catch (err) {
-        next(err)
-    }
-}) */
 
 //Crear Ruta que retorne todas las Ordenes de los usuarios
 router.get('/:id/orders', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        let user = await User.find({_id: id}).populate('orders');
+        let user = await User.find({ _id: id }).populate('orders');
         if (user[0].orders.length) {
             res.json(user[0].orders);
         } else {

@@ -31,7 +31,10 @@ const productSchema = new Schema({
         ref: "Category",
         type: Schema.Types.ObjectId
     }],
-    qualification: Array,
+    reviews: [{
+      ref: "Review",
+      type: Schema.Types.ObjectId
+    }]
     //compradores: [{}],
 },
 {
