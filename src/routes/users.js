@@ -70,7 +70,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const users = await User.find().populate('cart').populate('orders');
+        const users = await User.find().populate('cart').populate('orders').populate('favorites');
         //res.json(updatedCategory)
         res.send(users);
     }
@@ -82,7 +82,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params
     try {
-        user = await User.findById(id).populate('cart').populate('orders');
+        user = await User.findById(id).populate('cart').populate('orders').populate('favorites');
         //res.json(updatedCategory)
         res.send(user);
     }
@@ -149,12 +149,56 @@ router.get('/:id/orders', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        let user = await User.find({ _id: id }).populate('orders');
-        if (user[0].orders.length) {
-            res.json(user[0].orders);
+        let user = await User.findOne({ _id: id }).populate('orders');
+        if (user.orders.length) {
+            res.json(user.orders);
         } else {
             res.status(404).send('No orders found')
         }
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+
+//Crear Ruta que retorne todos los favoritos de un usuario
+router.get('/:idUser/favorites', async (req, res, next) => {
+    const { idUser } = req.params;
+
+    try {
+        let user = await User.findOne({ _id: idUser }).populate('favorites');
+        if (user.favorites.length) {
+            res.json(user.favorites);
+        } else {
+            res.status(404).send('No favorites found')
+        }
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+//Crear Ruta para agregar Item a Favoritos
+router.post('/:idUser/favorites/:idProduct', async (req, res, next) => {
+    const { idUser, idProduct } = req.params;
+
+    try {
+        let user = await User.updateOne({ _id: idUser }, { $addToSet: { favorites: [idProduct] } })
+        res.send('El item se agrego correctamente')
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+//Crear Ruta para eliminar Item de Favoritos
+router.delete('/:idUser/favorites/:idProduct', async (req, res, next) => {
+    const { idUser, idProduct } = req.params;
+
+    try {
+        let user = await User.updateOne({ _id: idUser }, { $pull: { favorites: idProduct } })
+        res.send('El item se eliminó correctamente')
     }
     catch (err) {
         next(err)

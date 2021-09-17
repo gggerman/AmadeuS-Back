@@ -19,13 +19,13 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
-    /* address: {
-        type: Number,
-        required: true
-    }, */
+
     phone: {
         type: Number,
     },
+    shipping: [{
+        type: Array
+    }],
     favorites: [{
         ref: "Product",
 		type: Schema.Types.ObjectId 
