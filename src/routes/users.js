@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
+const Product = require('../models/Product');
 
 
 router.post('/',
@@ -78,6 +79,18 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/:id', async (req, res, next) => {
+    const { id } = req.params
+    try {
+        user = await User.findById(id).populate('cart').populate('orders');
+        //res.json(updatedCategory)
+        res.send(user);
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
 //Ruta para agregar todos los productos del local storage al carrito
 router.post('/cart', async (req, res, next) => {
     let { cart, user } = req.body;
@@ -93,9 +106,9 @@ router.post('/cart', async (req, res, next) => {
             newUser.cart = cart
             const savedUser = await newUser.save();
         } else {
-            //foundUser.update({ $addToSet: { cart: cart } })
-            userCart = await User.updateOne({_id: foundUser._id}, { $push: { cart: cart } })
-        //userCart = await User.updateOne({_id: foundUser._id}, {$push: cart: {$each: cart} } )
+            //userCart = await User.updateOne({_id: foundUser._id}, { $push: { cart: cart } })
+            //userCart = await User.updateOne({_id: foundUser._id}, { $addToSet: { cart: cart } })
+            userCart = await User.updateOne({_id: foundUser._id}, { $set: { cart: cart } })
         }
 
         res.send('Se modifico el carrito')
