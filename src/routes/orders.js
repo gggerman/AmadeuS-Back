@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
 
-    const foundUser = await User.findOne({ mail: user.mail })
+    const foundUser = await User.findOne({ mail: user.email })
     if (!foundUser) {
       const newUser = new User({
         name: user.name,
