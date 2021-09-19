@@ -22,6 +22,9 @@ router.post('/', async (req, res, next) => {
     if (!foundUser) {
       const newUser = new User({
         name: user.name,
+        //surname: user.family_name,
+        nickname: user.nickname,
+        picture: user.picture,
         mail: user.email
       })
       newOrder.buyer = newUser
@@ -34,6 +37,7 @@ router.post('/', async (req, res, next) => {
       const savedOrder = await newOrder.save();
       
       userOrder = await User.updateOne({ mail: user.email }, { $addToSet: { orders: [savedOrder] } })
+      userShipping = await User.updateOne({ mail: user.email }, { $addToSet: { shipping: savedOrder.shipping } })
       console.log('este es el id de la orden ' + savedOrder._id)
       return res.status(200).send(savedOrder._id)
     }

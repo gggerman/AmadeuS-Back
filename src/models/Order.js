@@ -10,9 +10,7 @@ const orderSchema = new Schema({
         type: Number,
         required: false
     },
-    date: {
-        type: Date
-    },
+    date: String,
     /* products: [
         {
             _id:{
@@ -38,12 +36,14 @@ const orderSchema = new Schema({
         default:"Pending",
         required: true
     },
-    shipping: [{
-		street: String,
-		location: String,
-		number: Number,
-		info: String
-	}],
+    shipping: {
+        street: String,
+        state: String,
+        number: Number,
+        floor: String,
+        zip: Number,
+        between: String
+    },
     payment: {
         type: String,
         default:""

@@ -5,6 +5,8 @@ const categories = require('./categories')
 const users = require('./users')
 const mercadopago = require('./mercadopago')
 const orders = require('./orders')
+const authentication = require('./authentication')
+const reviews = require('./reviews')
 
 const router = Router();
 
@@ -14,6 +16,8 @@ router.use('/categories', categories)
 router.use('/users', users)
 router.use('/mercadopago', mercadopago)
 router.use('/orders', orders)
+router.use('/auth', authentication)
+router.use('/reviews', reviews)
 
 module.exports = router;
 

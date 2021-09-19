@@ -1,59 +1,76 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 //const bcrypt = require("bcryptjs");
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
     },
     surname: {
+      type: String,
+    },
+    nickname: {
+        type: String,
+        required: false
+    },
+    picture: {
         type: String,
         required: false
     },
     mail: {
-        type: String,
-        unique: true,
-        required: true
+      type: String,
+      unique: true,
+      required: true,
     },
     password: {
-        type: String,
-        required: false,
+      type: String,
     },
-    /* address: {
-        type: Number,
-        required: true
-    }, */
     phone: {
-        type: Number,
+      type: Number,
     },
-    favorites: [{
+    picture: {
+      type: String,
+    },
+    nickname: {
+      type: String,
+    },
+    shipping: [{}],
+    favorites: [
+      {
         ref: "Product",
-		type: Schema.Types.ObjectId 
-	}],
-    cart: [{
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    cart: [
+      {
         _id: {
-            ref: "Product",
-		    type: Schema.Types.ObjectId,
+          ref: "Product",
+          type: Schema.Types.ObjectId,
         },
-        quantity: Number
-    }],
-    orders: [{
+        quantity: Number,
+      },
+    ],
+    orders: [
+      {
         ref: "Order",
-        type: Schema.Types.ObjectId
-    }],
-    shoppingHistory: [{
-        type: Array
-    }],
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    shoppingHistory: [
+      {
+        type: Array,
+      },
+    ],
     isAdmin: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
-    },
-{
+  },
+  {
     timestamps: false,
     versionKey: false,
   }
-)
+);
 
 /* userSchema.statics.hashPassword = async function (password) {
     const salt = await bcrypt.genSalt(10);
@@ -64,6 +81,6 @@ userSchema.methods.validatePassword = async function (password, newPassword) {
   return await bcrypt.compare(password, newPassword);
 }; */
 
-const User = model('User', userSchema)
+const User = model("User", userSchema);
 
-module.exports = User
+module.exports = User;

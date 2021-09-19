@@ -31,16 +31,10 @@ const productSchema = new Schema({
         ref: "Category",
         type: Schema.Types.ObjectId
     }],
-    qualification: [{
-        idUser: {
-          ref: "User",
-          type: Schema.Types.ObjectId
-        },
-        punctuation: Number,
-        opinion: String,
-        date: String,
-        modified: String
-    }],
+    reviews: [{
+      ref: "Review",
+      type: Schema.Types.ObjectId
+    }]
     //compradores: [{}],
 },
 {

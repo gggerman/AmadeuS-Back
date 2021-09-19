@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
         }
         // Busqueda en la BD de todos los productos
         else {
-            let products = await Product.find({}).populate('categories');
+            let products = await Product.find({}).populate('categories').populate('reviews', '');
 
             if (products.length) {
                 res.json(products)
@@ -105,7 +105,7 @@ router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        product = await Product.findById(id)
+        product = await Product.findById(id).populate('categories').populate('reviews')
         res.send(product)
     } catch (err) {
         next(err)
@@ -165,49 +165,6 @@ router.delete('/:idProduct/category/:idCategory', async (req, res, next) => {
         next(err)
     }
 })
-
-router.post('/:idProduct/qualification/:idUser', async (req, res, next) => {
-  const { idProduct, idUser } = req.params;
-  const { punctuation, opinion, date, modified } = req.body;
-
-  try {
-    const product = await Product.updateOne({_id: idProduct}, {$addToSet: {qualification: {
-      idUser,
-      punctuation,
-      opinion,
-      date,
-      modified}}})
-    res.status(200).send('The review has been successfully added to the product.')
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.put('/:idProduct/qualification/:idQualification', async (req, res, next) => {
-  const { idProduct, idQualification } = req.params;
-  const { punctuation, opinion, date, modified } = req.body;
-
-  try {
-    const productFound = await Product.findById(idProduct);
-
-    productFound.qualification.find(e => e._id === idQualification) = req.body;
-
-    res.status(200).send('The review has been successfully modified.')
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.delete('/:idProduct/qualification/:idQualification', async (req, res, next) => {
-  const { idProduct, idQualification } = req.params;
-
-  try {
-    const productFound = await Product.update({_id: idProduct}, {$pull: {qualification: {_id: idQualification}}});
-    res.status(200).send('The review has been successfully removed.')
-  } catch (e) {
-    next(e);
-  }
-});
 
 //Retorna todos los productos que tengan {valor} en su nombre o descripcion.
 router.get('/search?query={valor}', async (req, res, next) => {
