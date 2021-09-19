@@ -34,11 +34,7 @@ const userSchema = new Schema(
     nickname: {
       type: String,
     },
-    shipping: [
-      {
-        type: Array,
-      },
-    ],
+    shipping: [{}],
     favorites: [
       {
         ref: "Product",
