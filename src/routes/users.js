@@ -16,7 +16,7 @@ router.post(
     try {
       const foundUser = await User.findOne({ mail: user.email })
         .populate("favorites")
-        .populate("cart")
+        .populate("cart._id")
         .populate("orders");
 
       if (foundUser) {
