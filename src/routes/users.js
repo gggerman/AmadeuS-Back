@@ -101,6 +101,9 @@ router.post('/cart', async (req, res, next) => {
         if (!foundUser) {
             const newUser = new User({
                 name: user.name,
+                //surname: user.family_name,
+                nickname: user.nickname,
+                picture: user.picture,
                 mail: user.email
             })
             newUser.cart = cart
@@ -138,6 +141,18 @@ router.delete('/:idUser/cart', async (req, res, next) => {
     try {
         user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
         res.send('El carrito quedo vacio')
+    } catch (err) {
+        next(err)
+    }
+})
+
+//Crear Ruta que retorne el carrito de un usuario
+router.get('/:idUser/cart', async (req, res, next) => {
+    const { idUser } = req.params;
+
+    try {
+        user = await User.findOne({ _id: idUser }).populate('cart._id')
+        res.send(user.cart)
     } catch (err) {
         next(err)
     }

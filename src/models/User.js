@@ -10,6 +10,14 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    nickname: {
+        type: String,
+        required: false
+    },
+    picture: {
+        type: String,
+        required: false
+    },
     mail: {
         type: String,
         unique: true,
@@ -17,14 +25,14 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: false,
+        required: false
     },
 
     phone: {
-        type: Number,
+        type: Number
     },
     shipping: [{
-        
+        type: Array
     }],
     favorites: [{
         ref: "Product",
