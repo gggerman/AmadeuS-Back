@@ -9,6 +9,14 @@ const userSchema = new Schema(
     surname: {
       type: String,
     },
+    nickname: {
+        type: String,
+        required: false
+    },
+    picture: {
+        type: String,
+        required: false
+    },
     mail: {
       type: String,
       unique: true,
