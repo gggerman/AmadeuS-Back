@@ -44,6 +44,9 @@ const userSchema = new Schema({
     shoppingHistory: [{
         type: Array
     }],
+    shipping: [{
+		// type: Array
+	}],
     isAdmin: {
         type: Boolean,
         default: false

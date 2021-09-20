@@ -38,12 +38,14 @@ const orderSchema = new Schema({
         default:"Pending",
         required: true
     },
-    shipping: [{
+    shipping: {
 		street: String,
-		location: String,
-		number: Number,
-		info: String
-	}],
+		state: String,
+        number: Number,
+		floor: String,
+		zip: Number,
+        between: String
+	},
     payment: {
         type: String,
         default:""

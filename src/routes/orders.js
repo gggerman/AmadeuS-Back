@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 router.post('/', async (req, res, next) => {
   const { buyer, phone, products, shipping, payment, date, user } = req.body;
-
+  console.log(shipping)
   try {
     const newOrder = new Order({
       phone,
@@ -34,6 +34,7 @@ router.post('/', async (req, res, next) => {
       const savedOrder = await newOrder.save();
       
       userOrder = await User.updateOne({ mail: user.email }, { $addToSet: { orders: [savedOrder] } })
+      userShipping = await User.updateOne({ mail: user.email }, { $addToSet: { shipping: shipping } }) //asi funciona SIN CORCHETES
       console.log('este es el id de la orden ' + savedOrder._id)
       return res.status(200).send(savedOrder._id)
     }
