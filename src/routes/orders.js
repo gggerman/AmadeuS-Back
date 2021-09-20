@@ -22,6 +22,9 @@ router.post('/', async (req, res, next) => {
     if (!foundUser) {
       const newUser = new User({
         name: user.name,
+        //surname: user.family_name,
+        nickname: user.nickname,
+        picture: user.picture,
         mail: user.email
       })
       newOrder.buyer = newUser

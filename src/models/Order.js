@@ -10,9 +10,7 @@ const orderSchema = new Schema({
         type: Number,
         required: false
     },
-    date: {
-        type: Date
-    },
+    date: String,
     /* products: [
         {
             _id:{
