@@ -142,11 +142,6 @@ router.post("/cart", async (req, res, next) => {
     catch (err) {
         next(err)
     }
-
-    res.send("Se modifico el carrito");
-  } catch (err) {
-    next(err);
-  }
 });
 
 //Crear Ruta para agregar Item al Carrito
