@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
-const Product = require("../models/Product");
+
 
 router.post(
   "/",
@@ -10,14 +10,18 @@ router.post(
   body("name").isLength({ max: 50 }),
   body("surname").isLength({ max: 50 }),
   body("password").isLength({ min: 5 }, { max: 20 }),
-  body("mail").isEmail().normalizeEmail(), */
+  body("email").isEmail().normalizeEmail(), */
   async (req, res, next) => {
     const { user } = req.body;
     try {
-      const foundUser = await User.findOne({ mail: user.email })
+      const foundUser = await User.findOne({ email: user.email })
         .populate("favorites")
         .populate("cart._id")
-        .populate("orders");
+        .populate({
+            path: 'orders',
+            populate: { path: 'products' }
+          })
+        //.populate("orders");
 
       if (foundUser) {
         res.json(foundUser);
@@ -25,9 +29,9 @@ router.post(
         /*  //Validaciones
             if (!name) return res.send("Debe agregar un nombre");
             if (!surname) return res.send("Debe agregar un apellido");
-            if (!mail) return res.send("Debe agregar un mail");
-            searchMail = await User.findOne({ mail: mail });
-            if (searchMail) return res.send("El mail ya existe");
+            if (!email) return res.send("Debe agregar un email");
+            searchMail = await User.findOne({ email: email });
+            if (searchMail) return res.send("El email ya existe");
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -35,7 +39,7 @@ router.post(
             }
         */
         const newUser = new User({
-          mail: user.email,
+          email: user.email,
           name: user.name,
           picture: user.picture,
           nickname: user.nickname,
@@ -43,6 +47,9 @@ router.post(
         });
 
         const userSaved = await newUser.save();
+
+            
+
         res.json(userSaved);
       }
     } catch (err) {
@@ -62,7 +69,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 router.put("/:id", async (req, res, next) => {
-  // const { name, surname, password, mail, phone} = req.body;
+  // const { name, surname, password, email, phone} = req.body;
   const { id } = req.params;
   try {
     await User.findByIdAndUpdate(id, req.body, {
@@ -79,7 +86,10 @@ router.get("/", async (req, res, next) => {
   try {
     const users = await User.find()
       .populate("cart")
-      .populate("orders")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
       .populate("favorites");
     //res.json(updatedCategory)
     res.send(users);
@@ -93,9 +103,12 @@ router.get("/:id", async (req, res, next) => {
   try {
     user = await User.findById(id)
       .populate("cart")
-      .populate("orders")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
       .populate("favorites");
-    //res.json(updatedCategory)
+
     res.send(user);
   } catch (err) {
     next(err);
@@ -108,14 +121,14 @@ router.post('/cart', async (req, res, next) => {
 
     try {
 
-        let foundUser = await User.findOne({ mail: user.email })
+        let foundUser = await User.findOne({ email: user.email })
         if (!foundUser) {
             const newUser = new User({
                 name: user.name,
                 //surname: user.family_name,
                 nickname: user.nickname,
                 picture: user.picture,
-                mail: user.email
+                email: user.email
             })
             newUser.cart = cart
             const savedUser = await newUser.save();
@@ -177,7 +190,11 @@ router.get("/:id/orders", async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    let user = await User.findOne({ _id: id }).populate("orders");
+    let user = await User.findOne({ _id: id }).populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      });
+    
     if (user.orders.length) {
       res.json(user.orders);
     } else {
@@ -233,5 +250,17 @@ router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
     next(err);
   }
 });
+
+router.post("/:idUser/shipping", async (req, res, next) => {
+    const { idUser } = req.params;
+    const { shipping } = req.body
+  
+    try {
+      userShipping = await User.updateOne({ _id: idUser }, { $addToSet: { shipping : shipping } });
+      res.send(userShipping);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 module.exports = router;
