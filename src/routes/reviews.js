@@ -19,7 +19,7 @@ router.post('/:idProduct/', async (req, res, next) => {
 
     const productFound = await Product.findById(idProduct);
     review.product = productFound;
-    const userFound = await User.findOne({mail: user.mail});
+    const userFound = await User.findOne({email: user.email});
     review.user = userFound;
 
     if (review) {
