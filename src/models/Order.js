@@ -29,7 +29,8 @@ const orderSchema = new Schema({
     ], */
     products: [{
         ref: "Product",
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        
     }],
     status: {
         type: String,
@@ -42,7 +43,8 @@ const orderSchema = new Schema({
         number: Number,
 		floor: String,
 		zip: Number,
-        between: String
+        between: String,
+        cost: Number
 	},
     payment: {
         type: String,

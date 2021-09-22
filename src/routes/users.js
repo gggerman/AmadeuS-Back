@@ -10,11 +10,11 @@ router.post(
   body("name").isLength({ max: 50 }),
   body("surname").isLength({ max: 50 }),
   body("password").isLength({ min: 5 }, { max: 20 }),
-  body("mail").isEmail().normalizeEmail(), */
+  body("email").isEmail().normalizeEmail(), */
   async (req, res, next) => {
     const { user } = req.body;
     try {
-      const foundUser = await User.findOne({ mail: user.email })
+      const foundUser = await User.findOne({ email: user.email })
         .populate("favorites")
         .populate("cart._id")
         .populate("orders");
@@ -25,9 +25,9 @@ router.post(
         /*  //Validaciones
             if (!name) return res.send("Debe agregar un nombre");
             if (!surname) return res.send("Debe agregar un apellido");
-            if (!mail) return res.send("Debe agregar un mail");
-            searchMail = await User.findOne({ mail: mail });
-            if (searchMail) return res.send("El mail ya existe");
+            if (!email) return res.send("Debe agregar un email");
+            searchMail = await User.findOne({ email: email });
+            if (searchMail) return res.send("El email ya existe");
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -35,7 +35,7 @@ router.post(
             }
         */
         const newUser = new User({
-          mail: user.email,
+          email: user.email,
           name: user.name,
           picture: user.picture,
           nickname: user.nickname,
@@ -62,10 +62,10 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 router.put("/:id", async (req, res, next) => {
-  // const { name, surname, password, mail, phone} = req.body;
+  const { shipping } = req.body;
   const { id } = req.params;
   try {
-    await User.findByIdAndUpdate(id, req.body, {
+    await User.findByIdAndUpdate({ _id: id }, { $addToSet: { shipping: shipping } }, {
       new: true,
     });
     //res.json(updatedCategory)
@@ -108,14 +108,14 @@ router.post('/cart', async (req, res, next) => {
 
     try {
 
-        let foundUser = await User.findOne({ mail: user.email })
+        let foundUser = await User.findOne({ email: user.email })
         if (!foundUser) {
             const newUser = new User({
                 name: user.name,
                 //surname: user.family_name,
                 nickname: user.nickname,
                 picture: user.picture,
-                mail: user.email
+                email: user.email
             })
             newUser.cart = cart
             const savedUser = await newUser.save();
@@ -229,6 +229,64 @@ router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
       { $pull: { favorites: idProduct } }
     );
     res.send("El item se eliminó correctamente");
+  } catch (err) {
+    next(err);
+  }
+});
+
+//Crear Ruta para agregar Domicilio a Shipping
+router.post("/:idUser/shipping", async (req, res, next) => {
+  const { idUser } = req.params;
+  const { shipping } = req.body
+
+  try {
+    userShipping = await User.updateOne(
+      { _id: idUser },
+      { $addToSet: { shipping : shipping } }
+    );
+    res.send(userShipping);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/:idUser/purchaseEmail", async (req, res, next) => {
+  const { idUser } = req.params;
+  const { buyer, products, shipping, status, _id } = req.body
+
+  try {
+    user = await User.findOne({ _id: idUser });
+    //if (savedOrder.status === "approved") {
+      transporter.sendMail({
+        from: '"Musical Ecommerce " <musical.ecommerce.henry@gmail.com>', // sender address
+        to: buyer.email, // list of receivers
+        subject: "Compra realizada correctamente", // Subject line
+        attachDataUrls: true,
+        html: `
+    <h1 style="color: #207a1a;">Hola ${user.name}, Gracias por elegirnos!</h1>
+    <p style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </p>
+    <div style="background-color: #207a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h3 style="color: #fff;">Producto/s: ${products}</h3>
+    </ul>
+    </div>
+    <div style="background-color: #207a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
+    <ul>
+    <h3 style="color: #fff;">Dirección de entrega:</h3>
+    <li style="color: #fff;">Ciudad: ${shipping.state}</li>
+    <li style="color: #fff;">Calle: ${shipping.street}</li>
+    <li style="color: #fff;">Número: ${shipping.number}</li>
+    <li style="color: #fff;">Piso: ${shipping.floor}</li>
+    <li style="color: #fff;">Entre calles: ${shipping.between}</li>
+    <li style="color: #fff;">Código Postal: ${shipping.zip}</li>
+    </ul>
+    </div>
+    <p style="color: #000000">Si eligió retiro en tienda, no olvide de mostrar este correo electrónico en la sucursal para recoger su compra.<br /><br />Número de Orden: <span style="font-weight: bold; text-decoration: underline;">${_id}</span><br /><br />All rights reserved by &copy; <a href="http://localhost:3000">Musical Ecommerce</a></p>
+    `, // html body
+      });
+    //}
+
+    res.send("El email se mando correctamente");
   } catch (err) {
     next(err);
   }

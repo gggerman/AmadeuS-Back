@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 router.post('/', async (req, res, next) => {
   const { buyer, phone, products, shipping, payment, date, user } = req.body;
-  console.log(shipping)
+
   try {
     const newOrder = new Order({
       phone,
@@ -18,26 +18,26 @@ router.post('/', async (req, res, next) => {
     const foundProducts = await Product.find({ name: { $in: products } })
     newOrder.products = foundProducts.map(product => product._id)
 
-    const foundUser = await User.findOne({ mail: user.email })
+    const foundUser = await User.findOne({ email: user.email })
     if (!foundUser) {
       const newUser = new User({
         name: user.name,
         //surname: user.family_name,
         nickname: user.nickname,
         picture: user.picture,
-        mail: user.email
+        email: user.email
       })
       newOrder.buyer = newUser
       const savedUser = await newUser.save();
     } else {
       newOrder.buyer = foundUser
     }
-    
+
     if (newOrder) {
       const savedOrder = await newOrder.save();
-      
-      userOrder = await User.updateOne({ mail: user.email }, { $addToSet: { orders: [savedOrder] } })
-      userShipping = await User.updateOne({ mail: user.email }, { $addToSet: { shipping: shipping } }) //asi funciona SIN CORCHETES
+
+      userOrder = await User.updateOne({ email: user.email }, { $addToSet: { orders: [savedOrder] } })
+      userShipping = await User.updateOne({ email: user.email }, { $addToSet: { shipping: savedOrder.shipping } })
       console.log('este es el id de la orden ' + savedOrder._id)
       return res.status(200).send(savedOrder._id)
     }
@@ -82,9 +82,9 @@ router.put('/:id', async (req, res, next) => {
 
   try {
     if (id) {
-      const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true });
+      const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true }).populate('products').populate('buyer');
 
-      return res.status(200).send('The order has been successfully modified.')
+      return res.status(200).send(orderUpdated)
     }
     return res.status(404).send('Order not found.')
 
