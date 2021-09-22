@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
-const Product = require("../models/Product");
+
 
 router.post(
   "/",
@@ -17,7 +17,11 @@ router.post(
       const foundUser = await User.findOne({ email: user.email })
         .populate("favorites")
         .populate("cart._id")
-        .populate("orders");
+        .populate({
+            path: 'orders',
+            populate: { path: 'products' }
+          })
+        //.populate("orders");
 
       if (foundUser) {
         res.json(foundUser);
@@ -43,6 +47,9 @@ router.post(
         });
 
         const userSaved = await newUser.save();
+
+            
+
         res.json(userSaved);
       }
     } catch (err) {
@@ -79,7 +86,10 @@ router.get("/", async (req, res, next) => {
   try {
     const users = await User.find()
       .populate("cart")
-      .populate("orders")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
       .populate("favorites");
     //res.json(updatedCategory)
     res.send(users);
@@ -93,9 +103,12 @@ router.get("/:id", async (req, res, next) => {
   try {
     user = await User.findById(id)
       .populate("cart")
-      .populate("orders")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
       .populate("favorites");
-    //res.json(updatedCategory)
+
     res.send(user);
   } catch (err) {
     next(err);
@@ -177,7 +190,11 @@ router.get("/:id/orders", async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    let user = await User.findOne({ _id: id }).populate("orders");
+    let user = await User.findOne({ _id: id }).populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      });
+    
     if (user.orders.length) {
       res.json(user.orders);
     } else {
