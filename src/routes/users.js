@@ -18,10 +18,10 @@ router.post(
         .populate("favorites")
         .populate("cart._id")
         .populate({
-            path: 'orders',
-            populate: { path: 'products' }
-          })
-        //.populate("orders");
+          path: 'orders',
+          populate: { path: 'products' }
+        })
+      //.populate("orders");
 
       if (foundUser) {
         res.json(foundUser);
@@ -48,7 +48,7 @@ router.post(
 
         const userSaved = await newUser.save();
 
-            
+
 
         res.json(userSaved);
       }
@@ -72,11 +72,18 @@ router.put("/:id", async (req, res, next) => {
   const { shipping } = req.body;
   const { id } = req.params;
   try {
-    await User.findByIdAndUpdate({ _id: id }, { $addToSet: { shipping: shipping } }, {
+    const modifiedUser = await User.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    })
+      .populate("favorites")
+      .populate("cart._id")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
     //res.json(updatedCategory)
-    res.send("The user has been successfully modified");
+    console.log('modificado', modifiedUser)
+    res.send(modifiedUser);
   } catch (err) {
     next(err);
   }
@@ -102,7 +109,7 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findById(id)
-      .populate("cart")
+      .populate("cart._id")
       .populate({
         path: 'orders',
         populate: { path: 'products' }
@@ -117,32 +124,32 @@ router.get("/:id", async (req, res, next) => {
 
 //Ruta para agregar todos los productos del local storage al carrito
 router.post('/cart', async (req, res, next) => {
-    let { cart, user } = req.body;
+  let { cart, user } = req.body;
 
-    try {
+  try {
 
-        let foundUser = await User.findOne({ email: user.email })
-        if (!foundUser) {
-            const newUser = new User({
-                name: user.name,
-                //surname: user.family_name,
-                nickname: user.nickname,
-                picture: user.picture,
-                email: user.email
-            })
-            newUser.cart = cart
-            const savedUser = await newUser.save();
-        } else {
-            //userCart = await User.updateOne({_id: foundUser._id}, { $push: { cart: cart } })
-            //userCart = await User.updateOne({_id: foundUser._id}, { $addToSet: { cart: cart } })
-            userCart = await User.updateOne({_id: foundUser._id}, { $set: { cart: cart } })
-        }
-
-        res.send('Se modifico el carrito')
+    let foundUser = await User.findOne({ email: user.email })
+    if (!foundUser) {
+      const newUser = new User({
+        name: user.name,
+        //surname: user.family_name,
+        nickname: user.nickname,
+        picture: user.picture,
+        email: user.email
+      })
+      newUser.cart = cart
+      const savedUser = await newUser.save();
+    } else {
+      //userCart = await User.updateOne({_id: foundUser._id}, { $push: { cart: cart } })
+      //userCart = await User.updateOne({_id: foundUser._id}, { $addToSet: { cart: cart } })
+      userCart = await User.updateOne({ _id: foundUser._id }, { $set: { cart: cart } })
     }
-    catch (err) {
-        next(err)
-    }
+
+    res.send('Se modifico el carrito')
+  }
+  catch (err) {
+    next(err)
+  }
 })
 
 
@@ -166,22 +173,22 @@ router.delete('/:idUser/cart', async (req, res, next) => {
   const { idUser } = req.params;
 
   try {
-      user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
-      res.send('El carrito quedo vacio')
+    user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
+    res.send('El carrito quedo vacio')
   } catch (err) {
-      next(err)
+    next(err)
   }
 })
 
 //Crear Ruta que retorne el carrito de un usuario
 router.get('/:idUser/cart', async (req, res, next) => {
-    const { idUser } = req.params;
-    try {
-        user = await User.findOne({ _id: idUser }).populate('cart._id')
-        res.send(user.cart)
-    } catch (err) {
-        next(err)
-    }
+  const { idUser } = req.params;
+  try {
+    user = await User.findOne({ _id: idUser }).populate('cart._id')
+    res.send(user.cart)
+  } catch (err) {
+    next(err)
+  }
 })
 
 
@@ -191,10 +198,10 @@ router.get("/:id/orders", async (req, res, next) => {
 
   try {
     let user = await User.findOne({ _id: id }).populate({
-        path: 'orders',
-        populate: { path: 'products' }
-      });
-    
+      path: 'orders',
+      populate: { path: 'products' }
+    });
+
     if (user.orders.length) {
       res.json(user.orders);
     } else {
