@@ -5,6 +5,37 @@ const Category = require('../models/Category');
 const Product = require('../models/Product');
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
+const multer = require('multer')
+const uuid = require('uuid')
+const path = require('path')
+
+const multerOptions = {
+    uploadsDir: './uploads/products'
+}
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, multerOptions.uploadsDir)
+    },
+    filename: (req, file, cb) => {
+        cb(null, [uuid.v4(), path.extname(file.originalname)].join(''))
+    }
+})
+
+const upload = multer({
+    storage: multerStorage
+})
+
+router.post('/images', upload.single('file'), (req, res) => {
+    res.send(req.file.filename)
+})
+
+router.get('/images/:filename', (req,res) =>{
+    console.log(__dirname)
+    res.sendFile(`uploads/products/${req.params.filename}`, {
+        root: path.resolve(__dirname, '../..')
+    })
+})
 
 router.get('/', async (req, res, next) => {
     const { name } = req.query;
@@ -66,40 +97,40 @@ router.post('/',
     body('name').isLength({ max: 300 }),
     body('description').isLength({ max: 3000 }),
     async (req, res, next) => {
-    const { name, description, price, stock, brand, image, categories } = req.body;
+        const { name, description, price, stock, brand, image, categories } = req.body;
 
-    try {
-        if (!name) return res.status(400).send("required name");
-        if (!description) return res.status(400).send("required description");
-        if (!price) return res.status(400).send("required price");
-        if (!stock) return res.status(400).send("required stock");
-        if (!image) return res.status(400).send("required image");
-        if (!categories.length) return res.status(400).send("required categories");
+        try {
+            if (!name) return res.status(400).send("required name");
+            if (!description) return res.status(400).send("required description");
+            if (!price) return res.status(400).send("required price");
+            if (!stock) return res.status(400).send("required stock");
+            if (!image) return res.status(400).send("required image");
+            if (!categories.length) return res.status(400).send("required categories");
 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+
+            const product = new Product({
+                name,
+                description,
+                price,
+                stock,
+                brand,
+                image
+            })
+
+            const foundCategories = await Category.find({ name: { $in: categories } })
+            product.categories = foundCategories.map(category => category._id)
+
+            const savedProduct = await product.save();
+            console.log(savedProduct)
+            res.status(200).send('The product has been created successfully.')
+        } catch (err) {
+            next(err)
         }
-
-        const product = new Product({
-            name,
-            description,
-            price,
-            stock,
-            brand,
-            image
-        })
-
-        const foundCategories = await Category.find({ name: { $in: categories } })
-        product.categories = foundCategories.map(category => category._id)
-
-        const savedProduct = await product.save();
-        console.log(savedProduct)
-        res.status(200).send('The product has been created successfully.')
-    } catch (err) {
-        next(err)
-    }
-});
+    });
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
@@ -146,8 +177,8 @@ router.delete('/:id', async (req, res, next) => {
 //Agrega la categoria al producto.
 router.post('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
-    try{
-        product = await Product.updateOne({_id: idProduct}, {$addToSet: { categories: idCategory }})
+    try {
+        product = await Product.updateOne({ _id: idProduct }, { $addToSet: { categories: idCategory } })
         res.send('The category has been successfully added to the product.')
     } catch (err) {
         next(err)
@@ -158,8 +189,8 @@ router.post('/:idProduct/category/:idCategory', async (req, res, next) => {
 //Elimina la categoria al producto.
 router.delete('/:idProduct/category/:idCategory', async (req, res, next) => {
     const { idProduct, idCategory } = req.params;
-    try{
-        product = await Product.update({_id: idProduct}, {$pull: { categories: idCategory }})
+    try {
+        product = await Product.update({ _id: idProduct }, { $pull: { categories: idCategory } })
         res.send('The category has been successfully removed from the product.')
     } catch (err) {
         next(err)
