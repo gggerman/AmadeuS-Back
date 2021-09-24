@@ -17,8 +17,9 @@ const orderSchema = new Schema({
                 ref: "Product",
                 type: Schema.Types.ObjectId
             },
-            price: Number,
             name: String,
+            price: Number,
+            description: String,
             quantity: Number,
             description: String,
             image: String,

@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Product = require('../models/Product');
 const { body, validationResult } = require("express-validator");
+const { transporter, emailer, emailOrder } = require('../config/email')
+const jwtCheck = require("../config/auth");
 
 
 router.post(
-  "/",
+  "/", jwtCheck,
   /* 
   body("name").isLength({ max: 50 }),
   body("surname").isLength({ max: 50 }),
@@ -35,20 +38,17 @@ router.post(
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+              return res.status(400).json({ errors: errors.array() });
             }
-        */
+            */
         const newUser = new User({
           email: user.email,
           name: user.name,
           picture: user.picture,
           nickname: user.nickname,
-          /* picture: user.picture */
         });
-
         const userSaved = await newUser.save();
-
-
+        transporter.sendMail(emailer(user))
 
         res.json(userSaved);
       }
@@ -58,7 +58,7 @@ router.post(
   }
 );
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", jwtCheck, async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findByIdAndDelete(id);
@@ -68,8 +68,8 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
-  const { shipping } = req.body;
+router.put("/:id", jwtCheck, async (req, res, next) => {
+  // const { name, surname, password, email, phone} = req.body;
   const { id } = req.params;
   try {
     const modifiedUser = await User.findByIdAndUpdate(id, req.body, {
@@ -89,7 +89,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", jwtCheck, async (req, res, next) => {
   try {
     const users = await User.find()
       .populate("cart")
@@ -105,7 +105,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id",/*  jwtCheck,  */async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findById(id)
@@ -115,7 +115,7 @@ router.get("/:id", async (req, res, next) => {
         populate: { path: 'products' }
       })
       .populate("favorites");
-
+      
     res.send(user);
   } catch (err) {
     next(err);
@@ -123,9 +123,8 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //Ruta para agregar todos los productos del local storage al carrito
-router.post('/cart', async (req, res, next) => {
+router.post("/cart",/*  jwtCheck, */ async (req, res, next) => {
   let { cart, user } = req.body;
-
   try {
 
     let foundUser = await User.findOne({ email: user.email })
@@ -150,11 +149,10 @@ router.post('/cart', async (req, res, next) => {
   catch (err) {
     next(err)
   }
-})
-
+});
 
 //Crear Ruta para agregar Item al Carrito
-router.post("/:idUser/cart/:idProduct", async (req, res, next) => {
+router.post("/:idUser/cart/:idProduct", jwtCheck, async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -169,31 +167,30 @@ router.post("/:idUser/cart/:idProduct", async (req, res, next) => {
 });
 
 //Crear Ruta para vaciar el carrito
-router.delete('/:idUser/cart', async (req, res, next) => {
+router.delete("/:idUser/cart", jwtCheck, async (req, res, next) => {
   const { idUser } = req.params;
 
   try {
-    user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
-    res.send('El carrito quedo vacio')
+    user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } });
+    res.send("El carrito quedo vacio");
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 //Crear Ruta que retorne el carrito de un usuario
-router.get('/:idUser/cart', async (req, res, next) => {
+router.get("/:idUser/cart", async (req, res, next) => {
   const { idUser } = req.params;
   try {
-    user = await User.findOne({ _id: idUser }).populate('cart._id')
-    res.send(user.cart)
+    user = await User.findOne({ _id: idUser }).populate("cart._id");
+    res.send(user.cart);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
-
+});
 
 //Crear Ruta que retorne todas las Ordenes de los usuarios
-router.get("/:id/orders", async (req, res, next) => {
+router.get("/:id/orders", jwtCheck, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -213,11 +210,12 @@ router.get("/:id/orders", async (req, res, next) => {
 });
 
 //Crear Ruta que retorne todos los favoritos de un usuario
-router.get("/:idUser/favorites", async (req, res, next) => {
+router.get("/:idUser/favorites", /* jwtCheck, */ async (req, res, next) => {
   const { idUser } = req.params;
 
   try {
     let user = await User.findOne({ _id: idUser }).populate("favorites");
+    // console.log('user en get favorites', user)
     if (user.favorites.length) {
       res.json(user.favorites);
     } else {
@@ -229,7 +227,7 @@ router.get("/:idUser/favorites", async (req, res, next) => {
 });
 
 //Crear Ruta para agregar Item a Favoritos
-router.post("/:idUser/favorites/:idProduct", async (req, res, next) => {
+router.post("/:idUser/favorites/:idProduct", jwtCheck, async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -244,7 +242,7 @@ router.post("/:idUser/favorites/:idProduct", async (req, res, next) => {
 });
 
 //Crear Ruta para eliminar Item de Favoritos
-router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
+router.delete("/:idUser/favorites/:idProduct",/*  jwtCheck, */ async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -258,8 +256,7 @@ router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
   }
 });
 
-//Crear Ruta para agregar Domicilio a Shipping
-router.post("/:idUser/shipping", async (req, res, next) => {
+router.post("/:idUser/shipping", jwtCheck, async (req, res, next) => {
   const { idUser } = req.params;
   const { shipping } = req.body
 
@@ -276,41 +273,13 @@ router.post("/:idUser/shipping", async (req, res, next) => {
 
 router.post("/:idUser/purchaseEmail", async (req, res, next) => {
   const { idUser } = req.params;
-  const { buyer, products, shipping, status, _id } = req.body
-
+  const orderUpdated = req.body
   try {
-    user = await User.findOne({ _id: idUser });
-    //if (savedOrder.status === "approved") {
-      transporter.sendMail({
-        from: '"Musical Ecommerce " <musical.ecommerce.henry@gmail.com>', // sender address
-        to: buyer.email, // list of receivers
-        subject: "Compra realizada correctamente", // Subject line
-        attachDataUrls: true,
-        html: `
-    <h1 style="color: #207a1a;">Hola ${user.name}, Gracias por elegirnos!</h1>
-    <p style="color: #000000">Tu compra se procesó correctamente, a continuación te dejamos los detalles de la misma: </p>
-    <div style="background-color: #207a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
-    <ul>
-    <h3 style="color: #fff;">Producto/s: ${products}</h3>
-    </ul>
-    </div>
-    <div style="background-color: #207a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
-    <ul>
-    <h3 style="color: #fff;">Dirección de entrega:</h3>
-    <li style="color: #fff;">Ciudad: ${shipping.state}</li>
-    <li style="color: #fff;">Calle: ${shipping.street}</li>
-    <li style="color: #fff;">Número: ${shipping.number}</li>
-    <li style="color: #fff;">Piso: ${shipping.floor}</li>
-    <li style="color: #fff;">Entre calles: ${shipping.between}</li>
-    <li style="color: #fff;">Código Postal: ${shipping.zip}</li>
-    </ul>
-    </div>
-    <p style="color: #000000">Si eligió retiro en tienda, no olvide de mostrar este correo electrónico en la sucursal para recoger su compra.<br /><br />Número de Orden: <span style="font-weight: bold; text-decoration: underline;">${_id}</span><br /><br />All rights reserved by &copy; <a href="http://localhost:3000">Musical Ecommerce</a></p>
-    `, // html body
-      });
-    //}
-
-    res.send("El email se mando correctamente");
+    const user = await User.findOne({ _id: idUser });
+    if (orderUpdated.status === "approved") {
+      transporter.sendMail(emailOrder(user, orderUpdated))
+      res.send("El email se mando correctamente");
+    }
   } catch (err) {
     next(err);
   }
