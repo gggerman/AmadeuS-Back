@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const Product = require("../models/Product");
+const Product = require('../models/Product');
 const { body, validationResult } = require("express-validator");
-const {transporter, emailer, emailOrder} = require('../config/email')
+const { transporter, emailer, emailOrder } = require('../config/email')
+const jwtCheck = require("../config/auth");
 
 
 router.post(
-  "/",
+  "/", jwtCheck,
   /* 
   body("name").isLength({ max: 50 }),
   body("surname").isLength({ max: 50 }),
@@ -37,15 +38,14 @@ router.post(
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+              return res.status(400).json({ errors: errors.array() });
             }
-        */
+            */
         const newUser = new User({
           email: user.email,
           name: user.name,
           picture: user.picture,
           nickname: user.nickname,
-          /* picture: user.picture */
         });
         const userSaved = await newUser.save();
         transporter.sendMail(emailer(user))
@@ -58,7 +58,7 @@ router.post(
   }
 );
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", jwtCheck, async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findByIdAndDelete(id);
@@ -68,7 +68,7 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", jwtCheck, async (req, res, next) => {
   // const { name, surname, password, email, phone} = req.body;
   const { id } = req.params;
   try {
@@ -89,7 +89,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", jwtCheck, async (req, res, next) => {
   try {
     const users = await User.find()
       .populate("cart")
@@ -105,7 +105,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id",/*  jwtCheck,  */async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findById(id)
@@ -123,9 +123,8 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //Ruta para agregar todos los productos del local storage al carrito
-router.post('/cart', async (req, res, next) => {
+router.post("/cart",/*  jwtCheck, */ async (req, res, next) => {
   let { cart, user } = req.body;
-
   try {
 
     let foundUser = await User.findOne({ email: user.email })
@@ -150,11 +149,10 @@ router.post('/cart', async (req, res, next) => {
   catch (err) {
     next(err)
   }
-})
-
+});
 
 //Crear Ruta para agregar Item al Carrito
-router.post("/:idUser/cart/:idProduct", async (req, res, next) => {
+router.post("/:idUser/cart/:idProduct", jwtCheck, async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -169,31 +167,30 @@ router.post("/:idUser/cart/:idProduct", async (req, res, next) => {
 });
 
 //Crear Ruta para vaciar el carrito
-router.delete('/:idUser/cart', async (req, res, next) => {
+router.delete("/:idUser/cart", jwtCheck, async (req, res, next) => {
   const { idUser } = req.params;
 
   try {
-    user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } })
-    res.send('El carrito quedo vacio')
+    user = await User.updateOne({ _id: idUser }, { $pull: { cart: [] } });
+    res.send("El carrito quedo vacio");
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 //Crear Ruta que retorne el carrito de un usuario
-router.get('/:idUser/cart', async (req, res, next) => {
+router.get("/:idUser/cart", async (req, res, next) => {
   const { idUser } = req.params;
   try {
-    user = await User.findOne({ _id: idUser }).populate('cart._id')
-    res.send(user.cart)
+    user = await User.findOne({ _id: idUser }).populate("cart._id");
+    res.send(user.cart);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
-
+});
 
 //Crear Ruta que retorne todas las Ordenes de los usuarios
-router.get("/:id/orders", async (req, res, next) => {
+router.get("/:id/orders", jwtCheck, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -213,11 +210,12 @@ router.get("/:id/orders", async (req, res, next) => {
 });
 
 //Crear Ruta que retorne todos los favoritos de un usuario
-router.get("/:idUser/favorites", async (req, res, next) => {
+router.get("/:idUser/favorites", /* jwtCheck, */ async (req, res, next) => {
   const { idUser } = req.params;
 
   try {
     let user = await User.findOne({ _id: idUser }).populate("favorites");
+    // console.log('user en get favorites', user)
     if (user.favorites.length) {
       res.json(user.favorites);
     } else {
@@ -229,7 +227,7 @@ router.get("/:idUser/favorites", async (req, res, next) => {
 });
 
 //Crear Ruta para agregar Item a Favoritos
-router.post("/:idUser/favorites/:idProduct", async (req, res, next) => {
+router.post("/:idUser/favorites/:idProduct", jwtCheck, async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -244,7 +242,7 @@ router.post("/:idUser/favorites/:idProduct", async (req, res, next) => {
 });
 
 //Crear Ruta para eliminar Item de Favoritos
-router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
+router.delete("/:idUser/favorites/:idProduct",/*  jwtCheck, */ async (req, res, next) => {
   const { idUser, idProduct } = req.params;
 
   try {
@@ -258,7 +256,7 @@ router.delete("/:idUser/favorites/:idProduct", async (req, res, next) => {
   }
 });
 
-router.post("/:idUser/shipping", async (req, res, next) => {
+router.post("/:idUser/shipping", jwtCheck, async (req, res, next) => {
   const { idUser } = req.params;
   const { shipping } = req.body
 
@@ -270,15 +268,11 @@ router.post("/:idUser/shipping", async (req, res, next) => {
   }
 });
 
-
 router.post("/:idUser/purchaseEmail", async (req, res, next) => {
   const { idUser } = req.params;
   const orderUpdated = req.body
-
   try {
-
-    user = await User.findOne({ _id: idUser });
-
+    const user = await User.findOne({ _id: idUser });
     if (orderUpdated.status === "approved") {
       transporter.sendMail(emailOrder(user, orderUpdated))
       res.send("El email se mando correctamente");

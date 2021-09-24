@@ -28,10 +28,10 @@ const orderSchema = new Schema({
             // }
         }
     ],
-    /* products: [{
-        ref: "Product",
-        type: Schema.Types.ObjectId
-    }], */
+    // products: [{
+    //     ref: "Product",
+    //     type: Schema.Types.ObjectId
+    // }],
     status: {
         type: String,
         default:"Pending",

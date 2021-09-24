@@ -84,10 +84,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
-
+  const { status } = req.body
   try {
     const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true });
-    console.log('orderUpdated', orderUpdated)
 
     if (orderUpdated==={}) {
       res.status(404).send('Order not found.')
@@ -102,19 +101,15 @@ router.put('/:id', async (req, res, next) => {
 router.put('/stock/:id', async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body
-  console.log('status', status)
   try {
     const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true });
-    console.log('orderUpdated', orderUpdated)
 
     if (orderUpdated && status === 'approved') {
-      console.log('entre a if status')
       orderUpdated.products.forEach(async e => {
-        console.log('e.quantity', e.quantity)
         return await Product.updateOne({ name: e.name }, { $inc: { stock: -e.quantity } }, { new: true })
       })
     }
-
+    
     if (orderUpdated==={}) {
       res.status(404).send('Order not found.')
     } else {

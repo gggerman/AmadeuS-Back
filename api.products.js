@@ -226,7 +226,7 @@ let products = [
         stock: 5,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_627409-MLA40579194224_012020-F.webp',
+        image: 'D_NQ_NP_2X_627409-MLA40579194224_012020-F.webp',
         qualification: [],
     },
     {
@@ -236,7 +236,7 @@ let products = [
         stock: 6,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_959425-MLA41915795116_052020-O.webp',
+        image: 'D_NQ_NP_959425-MLA41915795116_052020-O.webp',
         qualification: [],
     },
     {
@@ -246,7 +246,7 @@ let products = [
         stock: 6,
         brand: 'Korg',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_987762-MLA41716596123_052020-F.webp',
+        image: 'D_NQ_NP_2X_987762-MLA41716596123_052020-F.webp',
         qualification: [],
     },
     {
@@ -256,7 +256,7 @@ let products = [
         stock: 5,
         brand: 'Moon',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_797497-MLA32793352280_112019-F.webp',
+        image: 'D_NQ_NP_2X_797497-MLA32793352280_112019-F.webp',
         qualification: [],
     },
     {
@@ -266,7 +266,7 @@ let products = [
         stock: 5,
         brand: 'Audio Sonic',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_789421-MLA31652465766_082019-F.webp',
+        image: 'D_NQ_NP_2X_789421-MLA31652465766_082019-F.webp',
         qualification: [],
     },
     {
@@ -276,7 +276,7 @@ let products = [
         stock: 6,
         brand: 'JBL',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_957668-MLA41255110787_032020-F.webp',
+        image: 'D_NQ_NP_2X_957668-MLA41255110787_032020-F.webp',
         qualification: [],
     },
     {
@@ -286,7 +286,7 @@ let products = [
         stock: 3,
         brand: 'Yamaha',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_820011-MLA20464952446_102015-O.webp',
+        image: 'D_NQ_NP_820011-MLA20464952446_102015-O.webp',
         qualification: [],
     },
     {
@@ -296,7 +296,7 @@ let products = [
         stock: 3,
         brand: 'Pearl River',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_833007-MLA43448230245_092020-F.webp',
+        image: 'D_NQ_NP_2X_833007-MLA43448230245_092020-F.webp',
         qualification: [],
     },
     {
@@ -306,7 +306,7 @@ let products = [
         stock: 5,
         brand: 'Behringer',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_731090-MLA44581640474_012021-F.webp',
+        image: 'D_NQ_NP_2X_731090-MLA44581640474_012021-F.webp',
         qualification: [],
     },
     {
@@ -316,7 +316,7 @@ let products = [
         stock: 5,
         brand: 'Phonic',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_828139-MLA44726454691_012021-F.webp',
+        image: 'D_NQ_NP_2X_828139-MLA44726454691_012021-F.webp',
         qualification: [],
     },
     {
