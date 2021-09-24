@@ -6,7 +6,7 @@ let products = [
         stock: 3,
         brand: 'Gracia',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_854592-MLA44116070158_112020-F.webp',
+        image: '76db9485-1f7a-4322-b98f-d9643b66715e.png',
         qualification: [],
     },
     {
@@ -16,7 +16,7 @@ let products = [
         stock: 4,
         brand: 'Fonseca',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_855433-MLA44283936308_122020-F.webp',
+        image: '76db9485-1f7a-4322-b98f-d9643b66715e.png',
         qualification: [],
     },
     {
@@ -26,7 +26,7 @@ let products = [
         stock: 3,
         brand: 'Fonseca',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_940459-MLA44283926435_122020-F.webp',
+        image: 'D_NQ_NP_2X_940459-MLA44283926435_122020-F.webp',
         qualification: [],
     },
     {
@@ -36,7 +36,7 @@ let products = [
         stock: 3,
         brand: 'La Alpujarra',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_916269-MLA44011711745_112020-F.webp',
+        image: 'D_NQ_NP_2X_916269-MLA44011711745_112020-F.webp',
         qualification: [],
     },
     {
@@ -46,7 +46,7 @@ let products = [
         stock: 2,
         brand: 'Disbyte',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_863411-MLA42437374450_072020-F.webp',
+        image: 'D_NQ_NP_2X_863411-MLA42437374450_072020-F.webp',
         qualification: [],
     },
     {
@@ -56,7 +56,7 @@ let products = [
         stock: 2,
         brand: 'Schecter',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_836288-MLA41099294476_032020-F.webp',
+        image: 'D_NQ_NP_2X_836288-MLA41099294476_032020-F.webp',
         qualification: [],
     },
     {
@@ -66,7 +66,7 @@ let products = [
         stock: 4,
         brand: 'Casio',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_887367-MLA31356022737_072019-F.webp',
+        image: 'D_NQ_NP_2X_887367-MLA31356022737_072019-F.webp',
         qualification: [],
     },
     {
@@ -76,7 +76,7 @@ let products = [
         stock: 5,
         brand: 'Shure',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_648930-MLA41230531398_032020-F.webp',
+        image: 'D_NQ_NP_2X_648930-MLA41230531398_032020-F.webp',
         qualification: [],
     },
     {
@@ -86,7 +86,7 @@ let products = [
         stock: 3,
         brand: 'Shure',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_873836-MLA46166212925_052021-F.webp',
+        image: 'D_NQ_NP_2X_873836-MLA46166212925_052021-F.webp',
         qualification: [],
     },
     {
@@ -96,7 +96,7 @@ let products = [
         stock: 3,
         brand: 'Mapex',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_636361-MLA40568777195_012020-F.webp',
+        image: 'D_NQ_NP_2X_636361-MLA40568777195_012020-F.webp',
         qualification: [],
     },
     {
@@ -106,7 +106,7 @@ let products = [
         stock: 5,
         brand: 'Natal',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_729829-MLA44492766909_012021-F.webp',
+        image: 'D_NQ_NP_2X_729829-MLA44492766909_012021-F.webp',
         qualification: [],
     },
     {
@@ -116,7 +116,7 @@ let products = [
         stock: 3,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_609764-MLA42823013408_072020-F.webp',
+        image: 'D_NQ_NP_2X_609764-MLA42823013408_072020-F.webp', // Lea
         qualification: [],
     },
     {
