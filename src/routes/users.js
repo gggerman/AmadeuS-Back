@@ -72,11 +72,18 @@ router.put("/:id", async (req, res, next) => {
   // const { name, surname, password, email, phone} = req.body;
   const { id } = req.params;
   try {
-    await User.findByIdAndUpdate(id, req.body, {
+    const modifiedUser = await User.findByIdAndUpdate(id, req.body, {
       new: true,
-    });
+    })
+      .populate("favorites")
+      .populate("cart._id")
+      .populate({
+        path: 'orders',
+        populate: { path: 'products' }
+      })
     //res.json(updatedCategory)
-    res.send("The user has been successfully modified");
+    console.log('modificado', modifiedUser)
+    res.send(modifiedUser);
   } catch (err) {
     next(err);
   }
@@ -102,7 +109,7 @@ router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     user = await User.findById(id)
-      .populate("cart")
+      .populate("cart._id")
       .populate({
         path: 'orders',
         populate: { path: 'products' }
