@@ -226,7 +226,7 @@ let products = [
         stock: 5,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_627409-MLA40579194224_012020-F.webp',
+        image: 'D_NQ_NP_2X_627409-MLA40579194224_012020-F.webp',
         qualification: [],
     },
     {
@@ -236,7 +236,7 @@ let products = [
         stock: 6,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_959425-MLA41915795116_052020-O.webp',
+        image: 'D_NQ_NP_959425-MLA41915795116_052020-O.webp',
         qualification: [],
     },
     {
@@ -246,7 +246,7 @@ let products = [
         stock: 6,
         brand: 'Korg',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_987762-MLA41716596123_052020-F.webp',
+        image: 'D_NQ_NP_2X_987762-MLA41716596123_052020-F.webp',
         qualification: [],
     },
     {
@@ -256,7 +256,7 @@ let products = [
         stock: 5,
         brand: 'Moon',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_797497-MLA32793352280_112019-F.webp',
+        image: 'D_NQ_NP_2X_797497-MLA32793352280_112019-F.webp',
         qualification: [],
     },
     {
@@ -266,7 +266,7 @@ let products = [
         stock: 5,
         brand: 'Audio Sonic',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_789421-MLA31652465766_082019-F.webp',
+        image: 'D_NQ_NP_2X_789421-MLA31652465766_082019-F.webp',
         qualification: [],
     },
     {
@@ -276,7 +276,7 @@ let products = [
         stock: 6,
         brand: 'JBL',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_957668-MLA41255110787_032020-F.webp',
+        image: 'D_NQ_NP_2X_957668-MLA41255110787_032020-F.webp',
         qualification: [],
     },
     {
@@ -286,7 +286,7 @@ let products = [
         stock: 3,
         brand: 'Yamaha',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_820011-MLA20464952446_102015-O.webp',
+        image: 'D_NQ_NP_820011-MLA20464952446_102015-O.webp',
         qualification: [],
     },
     {
@@ -296,7 +296,7 @@ let products = [
         stock: 3,
         brand: 'Pearl River',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_833007-MLA43448230245_092020-F.webp',
+        image: 'D_NQ_NP_2X_833007-MLA43448230245_092020-F.webp',
         qualification: [],
     },
     {
@@ -306,7 +306,7 @@ let products = [
         stock: 5,
         brand: 'Behringer',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_731090-MLA44581640474_012021-F.webp',
+        image: 'D_NQ_NP_2X_731090-MLA44581640474_012021-F.webp',
         qualification: [],
     },
     {
@@ -316,7 +316,7 @@ let products = [
         stock: 5,
         brand: 'Phonic',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_828139-MLA44726454691_012021-F.webp',
+        image: 'D_NQ_NP_2X_828139-MLA44726454691_012021-F.webp',
         qualification: [],
     },
     {
@@ -326,7 +326,7 @@ let products = [
         stock: 6,
         brand: 'Moon',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_892644-MLA45285111635_032021-O.webp',
+        image: 'D_NQ_NP_892644-MLA45285111635_032021-O.webp',
         qualification: [],
     },
     {
@@ -336,7 +336,7 @@ let products = [
         stock: 7,
         brand: 'Fifine',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_768140-MLA44230258225_122020-F.webp',
+        image: 'D_NQ_NP_2X_768140-MLA44230258225_122020-F.webp',
         qualification: [],
     },
     {
@@ -346,7 +346,7 @@ let products = [
         stock: 8,
         brand: 'Apogee',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_957109-MLA45583723731_042021-F.webp',
+        image: 'D_NQ_NP_2X_957109-MLA45583723731_042021-F.webp',
         qualification: [],
     },
     {
@@ -356,7 +356,7 @@ let products = [
         stock: 8,
         brand: 'KRK',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_882153-MLA41230531734_032020-F.webp',
+        image: 'D_NQ_NP_2X_882153-MLA41230531734_032020-F.webp',
         qualification: [],
     },
     {
@@ -366,7 +366,7 @@ let products = [
         stock: 7,
         brand: 'Maono',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_761520-MLA44654215981_012021-F.webp',
+        image: 'D_NQ_NP_2X_761520-MLA44654215981_012021-F.webp',
         qualification: [],
     },
     {
@@ -376,7 +376,7 @@ let products = [
         stock: 7,
         brand: 'Audio-Technica',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_765934-MLA42806459413_072020-F.webp',
+        image: 'D_NQ_NP_2X_765934-MLA42806459413_072020-F.webp',
         qualification: [],
     },
     {
@@ -386,7 +386,7 @@ let products = [
         stock: 7,
         brand: 'Golpe',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_953441-MLA31042111917_062019-F.webp',
+        image: 'D_NQ_NP_2X_953441-MLA31042111917_062019-F.webp',
         qualification: [],
     },
     {
@@ -396,7 +396,7 @@ let products = [
         stock: 7,
         brand: 'Terrapiano',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_616282-MLA41230455752_032020-F.webp',
+        image: 'D_NQ_NP_2X_616282-MLA41230455752_032020-F.webp',
         qualification: [],
     },
     {
@@ -406,7 +406,7 @@ let products = [
         stock: 5,
         brand: 'Meinl',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_643710-MLA44182849231_112020-F.webp',
+        image: 'D_NQ_NP_2X_643710-MLA44182849231_112020-F.webp',
         qualification: [],
     },
     {
@@ -416,7 +416,7 @@ let products = [
         stock: 4,
         brand: 'Lazer',
         categories: ['Percusion'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_999555-MLA41010414294_032020-F.webp',
+        image: 'D_NQ_NP_2X_999555-MLA41010414294_032020-F.webp',
         qualification: [],
     },
     {
@@ -426,7 +426,7 @@ let products = [
         stock: 5,
         brand: 'Lee Oskar',
         categories: ['Viento'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_885546-MLA31035897943_062019-F.webp',
+        image: 'D_NQ_NP_2X_885546-MLA31035897943_062019-F.webp',
         qualification: [],
     },
     {
@@ -436,7 +436,7 @@ let products = [
         stock: 5,
         brand: 'Hohner',
         categories: ['Viento'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_791369-MLA31022482398_062019-F.webp',
+        image: 'D_NQ_NP_2X_791369-MLA31022482398_062019-F.webp',
         qualification: [],
     },
     {
@@ -446,7 +446,7 @@ let products = [
         stock: 4,
         brand: 'Lincoln Wind',
         categories: ['Viento'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_625680-MLA45228898112_032021-F.webp',
+        image: 'D_NQ_NP_2X_625680-MLA45228898112_032021-F.webp',
         qualification: [],
     },
     {
@@ -456,7 +456,7 @@ let products = [
         stock: 5,
         brand: 'Stradella',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_929949-MLA43914507651_102020-O.webp',
+        image: 'D_NQ_NP_929949-MLA43914507651_102020-O.webp',
         qualification: [],
     },
     {
@@ -466,7 +466,7 @@ let products = [
         stock: 3,
         brand: 'Segovia',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_706388-MLA45653241451_042021-O.webp',
+        image: 'D_NQ_NP_706388-MLA45653241451_042021-O.webp',
         qualification: [],
     },
     {
@@ -476,7 +476,7 @@ let products = [
         stock: 3,
         brand: 'Casio',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_618011-MLA41914542629_052020-F.webp',
+        image: 'D_NQ_NP_2X_618011-MLA41914542629_052020-F.webp',
         qualification: [],
     },
     {
@@ -486,7 +486,7 @@ let products = [
         stock: 6,
         brand: 'Cort',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_624236-MLA45535110053_042021-F.webp',
+        image: 'D_NQ_NP_2X_624236-MLA45535110053_042021-F.webp',
         qualification: [],
     },
     {
@@ -496,7 +496,7 @@ let products = [
         stock: 4,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_812135-MLA40832847740_022020-O.webp',
+        image: 'D_NQ_NP_812135-MLA40832847740_022020-O.webp',
         qualification: [],
     },
 ]
