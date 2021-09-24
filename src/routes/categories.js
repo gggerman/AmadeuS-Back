@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 }) */
-router.post('/', jwtCheck, 
+router.post('/', /*jwtCheck,*/ 
     body('name').isLength({ max: 80 }),
     async (req, res, next) => {
     let { name } = req.body;
@@ -57,7 +57,7 @@ router.post('/', jwtCheck,
     }
 })
 
-router.put('/:id', jwtCheck, async (req, res, next) => {
+router.put('/:id', /*jwtCheck,*/ async (req, res, next) => {
     const { id } = req.params;
     try {
         const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
@@ -70,7 +70,7 @@ router.put('/:id', jwtCheck, async (req, res, next) => {
     }
 })
 
-router.delete('/:id', jwtCheck, async (req, res, next) => {
+router.delete('/:id', /*jwtCheck,*/ async (req, res, next) => {
     const { id } = req.params;
     try {
         category = await Category.findByIdAndDelete(id)
