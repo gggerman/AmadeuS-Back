@@ -261,7 +261,10 @@ router.post("/:idUser/shipping", jwtCheck, async (req, res, next) => {
   const { shipping } = req.body
 
   try {
-    userShipping = await User.updateOne({ _id: idUser }, { $addToSet: { shipping: shipping } });
+    userShipping = await User.updateOne(
+      { _id: idUser },
+      { $addToSet: { shipping : shipping } }
+    );
     res.send(userShipping);
   } catch (err) {
     next(err);

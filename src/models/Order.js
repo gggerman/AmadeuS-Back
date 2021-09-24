@@ -11,8 +11,8 @@ const orderSchema = new Schema({
         required: false
     },
     date: String,
-    products: [
-        {
+      products: [
+      {
             _id:{
                 ref: "Product",
                 type: Schema.Types.ObjectId
@@ -21,16 +21,18 @@ const orderSchema = new Schema({
             price: Number,
             description: String,
             quantity: Number,
+            description: String,
             image: String,
             // review: {
             //     type: String,
             //     default: 'NoReview'
             // }
-        }
-    ],
+       }
+      ],
     // products: [{
     //     ref: "Product",
-    //     type: Schema.Types.ObjectId
+    //     type: Schema.Types.ObjectId,
+        
     // }],
     status: {
         type: String,
@@ -38,12 +40,18 @@ const orderSchema = new Schema({
         required: true
     },
     shipping: {
-        street: String,
-        state: String,
+		street: String,
+		state: String,
         number: Number,
-        floor: String,
-        zip: Number,
+		floor: String,
+		zip: Number,
         between: String
+	},
+    cost: {
+        type: Number
+    },
+    quantity: {
+        type: Number
     },
     payment: {
         type: String,

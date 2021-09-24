@@ -6,7 +6,7 @@ let products = [
         stock: 3,
         brand: 'Gracia',
         categories: ['Cuerda'],
-        image: 'D_NQ_NP_2X_854592-MLA44116070158_112020-F.webp',
+        image: '76db9485-1f7a-4322-b98f-d9643b66715e.png',
         qualification: [],
     },
     {
@@ -16,7 +16,7 @@ let products = [
         stock: 4,
         brand: 'Fonseca',
         categories: ['Cuerda'],
-        image: 'D_NQ_NP_2X_855433-MLA44283936308_122020-F.webp',
+        image: '76db9485-1f7a-4322-b98f-d9643b66715e.png',
         qualification: [],
     },
     {
@@ -116,7 +116,7 @@ let products = [
         stock: 3,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'D_NQ_NP_2X_609764-MLA42823013408_072020-F.webp',
+        image: 'D_NQ_NP_2X_609764-MLA42823013408_072020-F.webp', // Lea
         qualification: [],
     },
     {

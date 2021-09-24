@@ -20,6 +20,10 @@ router.post('/checkout', (req, res) => {
 			quantity: Number(req.body.quantity),
 			
 		}],
+		shipments:{
+			cost: req.body.shipping
+		},
+		
 		back_urls: {
 			"success": `${SERVER}/orderdetail`,
 			"failure": `${SERVER}/orderdetail`,
@@ -43,18 +47,21 @@ router.post('/checkout', (req, res) => {
 
 router.post('/cart', (req, res) => {
    
-	 const { cartProducts }  = req.body
+	 const { cartProducts, shipping }  = req.body
 	 const arreglo =  cartProducts.map ((item)  => ({ 
 					title: item.name,
 					unit_price: Number(item.price),
 					quantity: Number(item.quantity), 
 	}))
-	// console.log('arreglo que viene por body', arreglo)
+	
+	console.log('arreglo que viene por body', req.body)
 	
 		let preference = {
 			
 			items: arreglo,
-
+			shipments:{
+				cost: shipping
+			},
 			back_urls: {
 				"success": `${SERVER}/orderdetail`,
 				"failure": `${SERVER}/orderdetail`,
