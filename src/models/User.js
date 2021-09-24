@@ -26,6 +26,9 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
+    sub: {
+      type: String,
+    },
     phone: {
       type: Number,
     },

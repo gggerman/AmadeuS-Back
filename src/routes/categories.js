@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category')
 const { body, validationResult } = require('express-validator');
-const jwtCheck = require("../config/auth");
+const {jwtCheck} = require("../config/auth");
 
 router.get('/', async (req, res, next) => {
     try {
