@@ -1,4 +1,6 @@
+require("dotenv").config();
 const nodemailer = require('nodemailer')
+const { API_SERVER } = process.env;
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -58,7 +60,7 @@ const emailOrder = function (user, orderUpdated) {
     <div style="background-color: #fff; color: #000000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3px 10px; font-weight: bold; border-radius: 5px;">
     <ul>
     ${orderUpdated.products.map( e => (`
-    <img src=${e.image} width="140" height="180" align="right" >
+    <img src=${API_SERVER}/products/images/${e.image} width="140" height="180" align="right" >
     <h3 style="color: color: #000000;"> - ${e.name}</h3>
     <h4 style="color: color: #000000;">Precio unitario: ${e.price}</h4>
     <h4 style="color: color: #000000;">Cantidad: ${e.quantity}</h4>
