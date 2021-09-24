@@ -47,9 +47,7 @@ router.post(
           picture: user.picture,
           nickname: user.nickname,
         });
-
         const userSaved = await newUser.save();
-
         transporter.sendMail(emailer(user))
 
         res.json(userSaved);
@@ -117,7 +115,7 @@ router.get("/:id",/*  jwtCheck,  */async (req, res, next) => {
         populate: { path: 'products' }
       })
       .populate("favorites");
-
+      
     res.send(user);
   } catch (err) {
     next(err);

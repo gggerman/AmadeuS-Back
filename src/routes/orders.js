@@ -3,49 +3,54 @@ const router = express.Router();
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const User = require('../models/User');
+const {transporter, emailer } = require('../config/email')
 
 
-router.post('/', async (req, res, next) => {
-  const { buyer, phone, products, shipping, payment, date, user } = req.body;
-  console.log('products', products)
-  try {
-    const newOrder = new Order({
-      phone,
-      shipping,
-      payment,
-      date
-    });
+  router.post('/', async (req, res, next) => {
+    const { buyer, phone, products, shipping, payment, date, user } = req.body;
+    console.log('products', products)
+    try {
+      const newOrder = new Order({
+        phone,
+        shipping,
+        payment,
+        date
+      });
+  
+      newOrder.products = products;
+  
+      const foundUser = await User.findOne({ email: user.email })
+      if (!foundUser) {
+        const newUser = new User({
+          name: user.name,
+          //surname: user.family_name,
+          nickname: user.nickname,
+          picture: user.picture,
+          email: user.email
+        })
+  
+        newOrder.buyer = newUser
 
-    newOrder.products = products;
+        transporter.sendMail(emailer(user))
 
-    const foundUser = await User.findOne({ email: user.email })
-    if (!foundUser) {
-      const newUser = new User({
-        name: user.name,
-        //surname: user.family_name,
-        nickname: user.nickname,
-        picture: user.picture,
-        email: user.email
-      })
-
-      newOrder.buyer = newUser
-      await newUser.save();
-    } else {
-      newOrder.buyer = foundUser
+        const savedUser = await newUser.save();
+      } else {
+        newOrder.buyer = foundUser
+      }
+  
+      if (newOrder) {
+        const savedOrder = await newOrder.save();
+        userOrder = await User.updateOne({ email: user.email }, { $addToSet: { orders: [savedOrder] } })
+        userShipping = await User.updateOne({ email: user.email }, { $addToSet: { shipping: savedOrder.shipping } })
+        console.log('este es el id de la orden ' + savedOrder._id)
+        return res.status(200).send(savedOrder)
+      }
+      return res.status(404).send('Error: the order has not been created.')
+  
+    } catch (e) {
+      next(e);
     }
-
-    if (newOrder) {
-      const savedOrder = await newOrder.save();
-      userOrder = await User.updateOne({ email: user.email }, { $addToSet: { orders: [savedOrder] } })
-      userShipping = await User.updateOne({ email: user.email }, { $addToSet: { shipping: savedOrder.shipping } })
-      return res.status(200).send(savedOrder)
-    }
-    return res.status(404).send('Error: the order has not been created.')
-
-  } catch (e) {
-    next(e);
-  }
-});
+  });
 
 router.get('/', async (req, res, next) => {
   try {
@@ -76,6 +81,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+
 router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body
@@ -99,11 +105,9 @@ router.put('/stock/:id', async (req, res, next) => {
     const orderUpdated = await Order.findByIdAndUpdate(id, req.body, { new: true });
 
     if (orderUpdated && status === 'approved') {
-      console.log('orderUpdated.products', orderUpdated.products)
       orderUpdated.products.forEach(async e => {
         return await Product.updateOne({ name: e.name }, { $inc: { stock: -e.quantity } }, { new: true })
       })
-
     }
     
     if (orderUpdated==={}) {
