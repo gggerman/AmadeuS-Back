@@ -17,8 +17,8 @@ router.get('/', async (req, res, next) => {
             if (products.length) {
                 res.json(products)
             } else {
+                res.status(404).send('Product not found')
             }
-            res.status(404).send('Product not found')
         }
         // Busqueda en la BD de todos los productos
         else {
