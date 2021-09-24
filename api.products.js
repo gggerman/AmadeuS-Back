@@ -320,7 +320,7 @@ let products = [
         qualification: [],
     },
     {
-        name: 'Controlador Dj + Interface Moon Midi 1311',///////////yo
+        name: 'Controlador Dj + Interface Moon Midi 1311',
         description: 'Controlador de 4 canales MIDI con interfase incorporada - 8 canales para efectos - Crossfader, ecualizador de 3 bandas, control de navegación - Conexión para auriculares, mic y PA - Interfase de audio incorporada - Driver ASIO - Incluye software DJ LE para MacOSX 10.6/Win7 32bit/64bit, WinXP, Win8.',
         price: 46260,
         stock: 6,
