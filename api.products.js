@@ -126,7 +126,7 @@ let products = [
         stock: 4,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_750578-MLA40568773981_012020-F.webp',
+        image: 'D_NQ_NP_2X_750578-MLA40568773981_012020-F.webp',
         qualification: [],
     },
     {
@@ -136,7 +136,7 @@ let products = [
         stock: 6,
         brand: 'Music Man',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_754467-MLA42436050459_072020-F.webp',
+        image: 'D_NQ_NP_2X_754467-MLA42436050459_072020-F.webp',
         qualification: [],
     },
     {
@@ -146,7 +146,7 @@ let products = [
         stock: 4,
         brand: 'Racker Plus',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_823888-MLA47260971314_082021-F.webp',
+        image: 'D_NQ_NP_2X_823888-MLA47260971314_082021-F.webp',
         qualification: [],
     },
     {
@@ -156,7 +156,7 @@ let products = [
         stock: 5,
         brand: 'Squier',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_928771-MLA31586793288_072019-F.webp',
+        image: 'D_NQ_NP_2X_928771-MLA31586793288_072019-F.webp',
         qualification: [],
     },
     {
@@ -166,7 +166,7 @@ let products = [
         stock: 3,
         brand: 'Racker',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_924415-MLA33084043276_122019-F.webp',
+        image: 'D_NQ_NP_2X_924415-MLA33084043276_122019-F.webp',
         qualification: [],
     },
     {
@@ -176,7 +176,7 @@ let products = [
         stock: 5,
         brand: 'Yamaha',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_744487-MLA40568178554_012020-F.webp',
+        image: 'D_NQ_NP_2X_744487-MLA40568178554_012020-F.webp',
         qualification: [],
     },
     {
@@ -186,7 +186,7 @@ let products = [
         stock: 4,
         brand: 'Parquer',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_629712-MLA43916917911_102020-F.webp',
+        image: 'D_NQ_NP_2X_629712-MLA43916917911_102020-F.webp',
         qualification: [],
     },
     {
@@ -196,7 +196,7 @@ let products = [
         stock: 6,
         brand: 'Avvmic',
         categories: ['Electronica/audio'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_707051-MLA40568377877_012020-F.webp',
+        image: 'D_NQ_NP_2X_707051-MLA40568377877_012020-F.webp',
         qualification: [],
     },
     {
@@ -206,7 +206,7 @@ let products = [
         stock: 5,
         brand: 'Racker',
         categories: ['Cuerda'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_2X_730201-MLA40568690781_012020-F.webp',
+        image: 'D_NQ_NP_2X_730201-MLA40568690781_012020-F.webp',
         qualification: [],
     },
     {
@@ -216,7 +216,7 @@ let products = [
         stock: 6,
         brand: 'Roland',
         categories: ['Instrumentos eléctricos'],
-        image: 'https://http2.mlstatic.com/D_NQ_NP_619792-MLA41292931287_032020-O.webp',
+        image: 'D_NQ_NP_619792-MLA41292931287_032020-O.webp',
         qualification: [],
     },
     {
