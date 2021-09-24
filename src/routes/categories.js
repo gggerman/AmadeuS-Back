@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category')
 const { body, validationResult } = require('express-validator');
+const jwtCheck = require("../config/auth");
 
 router.get('/', async (req, res, next) => {
     try {
@@ -29,7 +30,7 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 }) */
-router.post('/',
+router.post('/', jwtCheck, 
     body('name').isLength({ max: 80 }),
     async (req, res, next) => {
     let { name } = req.body;
@@ -56,7 +57,7 @@ router.post('/',
     }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', jwtCheck, async (req, res, next) => {
     const { id } = req.params;
     try {
         const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
@@ -69,7 +70,7 @@ router.put('/:id', async (req, res, next) => {
     }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', jwtCheck, async (req, res, next) => {
     const { id } = req.params;
     try {
         category = await Category.findByIdAndDelete(id)

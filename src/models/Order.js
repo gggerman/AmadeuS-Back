@@ -11,26 +11,27 @@ const orderSchema = new Schema({
         required: false
     },
     date: String,
-    /* products: [
+    products: [
         {
             _id:{
                 ref: "Product",
                 type: Schema.Types.ObjectId
             },
+            name: String,
             price: Number,
-            title: String,
+            description: String,
             quantity: Number,
             image: String,
-            review: {
-                type: String,
-                default: 'NoReview'
-            }
+            // review: {
+            //     type: String,
+            //     default: 'NoReview'
+            // }
         }
-    ], */
-    products: [{
-        ref: "Product",
-        type: Schema.Types.ObjectId
-    }],
+    ],
+    // products: [{
+    //     ref: "Product",
+    //     type: Schema.Types.ObjectId
+    // }],
     status: {
         type: String,
         default:"Pending",
