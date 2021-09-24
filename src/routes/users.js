@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Product = require('../models/Product');
 const { body, validationResult } = require("express-validator");
 const { transporter, emailer, emailOrder } = require('../config/email')
-const jwtCheck = require("../config/auth");
+const { jwtCheck, getManagementApiJwt } = require("../config/auth");
 
 
 router.post(
@@ -16,6 +16,7 @@ router.post(
   body("email").isEmail().normalizeEmail(), */
   async (req, res, next) => {
     const { user } = req.body;
+    console.log('user en post', user)
     try {
       const foundUser = await User.findOne({ email: user.email })
         .populate("favorites")
@@ -46,6 +47,7 @@ router.post(
           name: user.name,
           picture: user.picture,
           nickname: user.nickname,
+          sub: user.sub
         });
         const userSaved = await newUser.save();
         transporter.sendMail(emailer(user))
@@ -283,6 +285,70 @@ router.post("/:idUser/purchaseEmail", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+
+
+router.get("/block/:userSub", jwtCheck, function (req, res) {
+  const { userSub } = req.params;
+
+  var request = require("request");
+  console.log('usersub en block', userSub)
+
+  getManagementApiJwt()
+    .then((data) => {
+      console.log('data', data)
+      const token = data.access_token;
+      var options = {
+        method: "PATCH",
+        url: "https://dev-0-knpzfi.us.auth0.com/api/v2/users/" + userSub,
+        headers: {
+          "authorization": "Bearer " + token,
+          "content-type": "application/json",
+        },
+        body: {
+          "blocked": true
+        },
+        json: true,
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        res.json(body);
+      });
+    });
+  
+});
+
+router.get("/desblock/:userSub", jwtCheck, function (req, res) {
+  const { userSub } = req.params;
+
+  var request = require("request");
+  console.log('usersub en block', userSub)
+
+  getManagementApiJwt()
+    .then((data) => {
+      console.log('data', data)
+      const token = data.access_token;
+      var options = {
+        method: "PATCH",
+        url: "https://dev-0-knpzfi.us.auth0.com/api/v2/users/" + userSub,
+        headers: {
+          "authorization": "Bearer " + token,
+          "content-type": "application/json",
+        },
+        body: {
+          "blocked": false
+        },
+        json: true,
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        res.json(body);
+      });
+    });
+  
 });
 
 module.exports = router;
