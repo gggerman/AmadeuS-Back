@@ -28,7 +28,8 @@ router.post('/', async (req, res, next) => {
         //surname: user.family_name,
         nickname: user.nickname,
         picture: user.picture,
-        email: user.email
+        email: user.email,
+        sub: user.sub
       })
 
       newOrder.buyer = newUser
