@@ -21,6 +21,7 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
+      
     },
     password: {
       type: String,
@@ -50,14 +51,14 @@ const userSchema = new Schema(
     orders: [
       {
         ref: "Order",
-        type: Schema.Types.ObjectId,
-      },
-    ],
-    shoppingHistory: [
-      {
-        type: Array,
-      },
-    ],
+        type: Schema.Types.ObjectId
+    }],
+    shoppingHistory: [{
+        type: Array
+    }],
+    shipping: [{
+		// type: Array
+	}],
     isAdmin: {
       type: Boolean,
       default: false,
